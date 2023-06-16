@@ -15108,10 +15108,28 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[307]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[850]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[851]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">maybe_sort_df</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;did&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;stable&quot;</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;generate/results/WD_YDLJ.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15126,7 +15144,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E5%8F%B8%E6%B3%95%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3%EF%BC%886/15%E7%89%88%EF%BC%89">&#21496;&#27861;&#38405;&#35835;&#29702;&#35299;&#65288;6/15&#29256;&#65289;<a class="anchor-link" href="#%E5%8F%B8%E6%B3%95%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3%EF%BC%886/15%E7%89%88%EF%BC%89">&#182;</a></h2>
+<h2 id="%E5%8F%B8%E6%B3%95%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3%EF%BC%886/16%E7%89%88%EF%BC%89">&#21496;&#27861;&#38405;&#35835;&#29702;&#35299;&#65288;6/16&#29256;&#65289;<a class="anchor-link" href="#%E5%8F%B8%E6%B3%95%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3%EF%BC%886/16%E7%89%88%EF%BC%89">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -15146,7 +15164,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[308]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[852]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;generate/original_dataset/原始裁判文书/index.csv&quot;</span><span class="p">)</span>
@@ -15192,7 +15210,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre><span class="ansi-green-intense-fg">Confirm no missing data</span>
 <span class="ansi-green-intense-fg">Confirm ids are unique</span>
-<span class="ansi-green-intense-fg">Confirm no missing ids (0 ~ 176)</span>
+<span class="ansi-green-intense-fg">Confirm no missing ids (0 ~ 359)</span>
 <span class="ansi-green-intense-fg">Confirm titles are unique</span>
 </pre>
 </div>
@@ -15219,7 +15237,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[309]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[853]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfi_grp</span> <span class="o">=</span> <span class="n">dfi</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;level&quot;</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">)</span>
@@ -15242,7 +15260,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[309]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[853]:</div>
 
 
 
@@ -15277,13 +15295,13 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   <tbody>
     <tr>
       <th>刑事</th>
-      <td>75</td>
-      <td>42.37%</td>
+      <td>102</td>
+      <td>28.33%</td>
     </tr>
     <tr>
       <th>民事</th>
-      <td>102</td>
-      <td>57.63%</td>
+      <td>258</td>
+      <td>71.67%</td>
     </tr>
   </tbody>
 </table>
@@ -15314,7 +15332,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[310]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[854]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ind</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_product</span><span class="p">(</span>
@@ -15350,7 +15368,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[311]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[855]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_ref</span> <span class="o">=</span> <span class="n">df_ref</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -15373,7 +15391,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[312]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[856]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfi_comps</span> <span class="o">=</span> <span class="p">{}</span>
@@ -15403,7 +15421,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[313]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[857]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfi_comps</span><span class="p">[</span><span class="s2">&quot;刑事&quot;</span><span class="p">]</span>
@@ -15422,7 +15440,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[313]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[857]:</div>
 
 
 
@@ -15465,16 +15483,16 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <th rowspan="4" valign="top">刑事</th>
       <th>中级法院</th>
       <td>29</td>
-      <td>38.67%</td>
+      <td>28.43%</td>
       <td>47.55%</td>
       <td>True</td>
     </tr>
     <tr>
       <th>基层法院</th>
-      <td>26</td>
-      <td>34.67%</td>
+      <td>53</td>
+      <td>51.96%</td>
       <td>51.89%</td>
-      <td>True</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>最高法院</th>
@@ -15486,7 +15504,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     <tr>
       <th>高级法院</th>
       <td>20</td>
-      <td>26.67%</td>
+      <td>19.61%</td>
       <td>0.52%</td>
       <td>False</td>
     </tr>
@@ -15506,7 +15524,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[314]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[858]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfi_comps</span><span class="p">[</span><span class="s2">&quot;民事&quot;</span><span class="p">]</span>
@@ -15525,7 +15543,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[314]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[858]:</div>
 
 
 
@@ -15568,21 +15586,21 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <th rowspan="4" valign="top">民事</th>
       <th>中级法院</th>
       <td>25</td>
-      <td>24.51%</td>
+      <td>9.69%</td>
       <td>9.78%</td>
       <td>True</td>
     </tr>
     <tr>
       <th>基层法院</th>
-      <td>57</td>
-      <td>55.88%</td>
+      <td>213</td>
+      <td>82.56%</td>
       <td>89.64%</td>
       <td>True</td>
     </tr>
     <tr>
       <th>最高法院</th>
       <td>20</td>
-      <td>19.61%</td>
+      <td>7.75%</td>
       <td>0.05%</td>
       <td>False</td>
     </tr>
@@ -15620,7 +15638,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[315]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[859]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;generate/results/WD_YDLJ.csv&quot;</span><span class="p">)</span>
@@ -15628,7 +15646,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <span class="n">missing_cons_dids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfi</span><span class="p">)))</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;did&quot;</span><span class="p">]))</span>
 <span class="k">if</span> <span class="n">missing_cons_dids</span><span class="p">:</span>
     <span class="n">missing_cons_dids_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">missing_cons_dids</span><span class="p">)))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[31mDetected datasets not constructed:</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[31mDetected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">missing_cons_dids</span><span class="p">)</span><span class="si">}</span><span class="s2"> datasets not constructed:</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; python generate/clean_wenshu_all.py&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; python generate/WD_YDLJ.py -p -d </span><span class="si">{</span><span class="n">missing_cons_dids_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
@@ -15653,14 +15671,14 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Constructed data: 3200
+<pre>Constructed data: 7112
 <span class="ansi-green-intense-fg">Confirm all existing datasets constructed</span>
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[315]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[859]:</div>
 
 
 
@@ -15726,38 +15744,38 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>...</td>
     </tr>
     <tr>
-      <th>3195</th>
-      <td>176</td>
-      <td>本案如何认定被告的经常居住地？</td>
-      <td>经查，被告自2018年8月2日起在北京市朝阳区八里庄东里甲1号院×号楼×单元×室居住至今，该...</td>
+      <th>7107</th>
+      <td>359</td>
+      <td>被告人在何时何地涉嫌犯罪？</td>
+      <td>被告人在2021年11月19日20时许，在环县“某某音乐烤吧”与朋友聚会时涉嫌犯罪。</td>
     </tr>
     <tr>
-      <th>3196</th>
-      <td>176</td>
-      <td>本院是否认可被告的管辖权异议？</td>
-      <td>是的，本院认可被告的管辖权异议，决定将案件移送北京市朝阳区人民法院处理。</td>
+      <th>7108</th>
+      <td>359</td>
+      <td>被告人被判处什么刑罚？</td>
+      <td>被告人被判处拘役一个月，缓刑二个月，并处罚金2000元。</td>
     </tr>
     <tr>
-      <th>3197</th>
-      <td>176</td>
-      <td>本裁定的法律依据是什么？</td>
-      <td>本裁定的法律依据是《中华人民共和国民事诉讼法》第二十二条第一款、第一百三十条第一款、第一百五...</td>
+      <th>7109</th>
+      <td>359</td>
+      <td>被告人的酒驾情况如何？</td>
+      <td>被告人餒酒驾驶车辆，2021年11月21日鉴定血液中乙醇平均含量为114.51mg/100ml。</td>
     </tr>
     <tr>
-      <th>3198</th>
-      <td>176</td>
-      <td>是否可以对本裁定提出上诉？</td>
-      <td>是的，如不服本裁定，可以在裁定书送达之日起十日内，向本院递交上诉状，并按对方当事人或者代表人...</td>
+      <th>7110</th>
+      <td>359</td>
+      <td>可以对本案判决提出上诉吗？</td>
+      <td>可以的。如果不服本判决，可在判决书送达之日起十日内向本院或甘肃省庆阳市中级人民法院提出上诉。</td>
     </tr>
     <tr>
-      <th>3199</th>
-      <td>176</td>
-      <td>上诉状需要提供哪些文件？</td>
-      <td>上诉状需要提供副本，并按对方当事人或者代表人的人数提出，具体参照《中华人民共和国民事诉讼法》...</td>
+      <th>7111</th>
+      <td>359</td>
+      <td>被告人是否对指控的事实、罪名及量刑建议有异议？</td>
+      <td>被告人对指控的事实、罪名及量刑建议没有异议，同意适用速裁程序且签字具结，在开庭审理过程中亦无异议。</td>
     </tr>
   </tbody>
 </table>
-<p>3200 rows × 3 columns</p>
+<p>7112 rows × 3 columns</p>
 </div>
 </div>
 
@@ -15772,7 +15790,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[316]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[860]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">bad_update_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;无更新&quot;</span><span class="p">))</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;无更新&quot;</span><span class="p">))]</span>
@@ -15797,13 +15815,13 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Incorrect update: 4 (0.125%) out of 3200
+<pre>Incorrect update: 7 (0.098%) out of 7112
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[316]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[860]:</div>
 
 
 
@@ -15854,6 +15872,24 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <th>2775</th>
       <td>152</td>
       <td>本案的定罪量刑依据是什么?</td>
+      <td>无更新。</td>
+    </tr>
+    <tr>
+      <th>4271</th>
+      <td>216</td>
+      <td>本案是否有其他更新？</td>
+      <td>无更新。</td>
+    </tr>
+    <tr>
+      <th>6199</th>
+      <td>305</td>
+      <td>案件进展如何？</td>
+      <td>本案近期无更新。</td>
+    </tr>
+    <tr>
+      <th>6231</th>
+      <td>306</td>
+      <td>本案将如何裁决?</td>
       <td>无更新。</td>
     </tr>
   </tbody>
