@@ -6,4 +6,4 @@
 
 ### 司法阅读理解
 
-- 裁判文书：[数据构造【06/17】](https://charlie-xiao.github.io/Law_Prompt_Data/storage/FD-ydlj-1.html)，[数据构造【500文书】](https://charlie-xiao.github.io/Law_Prompt_Data/storage/FD-ydlj-2.html)
+- 裁判文书：[数据构造【06/17】](https://charlie-xiao.github.io/Law_Prompt_Data/storage/FD-ydlj-d0617.html)，[数据构造【500文书】](https://charlie-xiao.github.io/Law_Prompt_Data/storage/FD-ydlj-500.html)
