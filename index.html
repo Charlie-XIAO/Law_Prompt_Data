@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>司法大模型数据集构造(新).md</title>
+<title>README.md</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
 <style>
@@ -578,62 +578,6 @@ Number of data &lt;= 2048       149500 (96.7%)
 <ul>
 <li>类型过于单一：数据集中只涉及刑法，且几乎所有条目都与故意伤害罪有关。</li>
 <li>模板过于单一：应使用更多种模板，分别随机采样进行拼接。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>百度知道法律问答（<code>QA_ZD</code>）</p>
-<ul>
-<li>
-<p>类型：有标签数据；数据来源：百度知道</p>
-  <details>
-  <summary>统计信息</summary>
-  <p></p>
-<pre class="hljs"><code><div>Fields                       instruction, input, output
-Number of data               3614
-
-Max total length of fields   7288
-Min total length of fields   9
-Ave total length of fields   318.9
-
-Number of data &lt;= 256        2042 (56.5%)
-Number of data &lt;= 512        3073 (85.0%)
-Number of data &lt;= 1024       3492 (96.6%)
-Number of data &lt;= 2048       3592 (99.4%)
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 我在微信有凭证上借了6000块钱，到手4800，因为之前总借而且付着高额利息不说还要给他们私人红包，我只想还他赢得的利息，因为是高利我不想给他，但是他们放高利贷的实在讨厌，骚扰家人，我想打官司可以吗？
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 没必要的，还没到官司这步，建议你跟家人把这事情说清楚，免得他们经常利用你家人威胁到你，最好的办法是把借款还清，从此和他们没有任何一个关系了，大家都安心。
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>模板二（<code>proportion=0.1</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 请问以下问题该如何解决？
-
-残疾人办退休的需要什么证明和材料
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 1、审批条件(1)职工因病或非因工致残，经劳动鉴定委员会鉴定为完全丧失劳动能力；(2)男年满50周岁、女年满45周岁；(3)缴费年限满15岁。2、审批程序(1)由职工本人向用人单位提出要求办理病退的书面申请；破产企业下岗职工可向档案托管机构提出申请。(2)由职工所在单位或其托管机构填写有本人签字确认的《湖北省企业职工因病提前退休条件审批表》；(3)将拟按因病提前退休人员的花名册，以及劳鉴委鉴定结论在本单位公示一周；(4)将职工退休审批表、公示情况、劳鉴委鉴定结论连同职工档案一并报同级人力资源和社会保障行政部门审批；(5)对不符合退休条件的，将材料退还用人单位，由用人单位向职工说明情况。
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>潜在问题</p>
-<ul>
-<li>回答质量不佳：百度知道的回答比较口语化，难以作为模型的训练语料。可以用ChatGPT对问题生成更为详细与合适的回答。</li>
-<li>问题质量不佳：百度知道的提问质量存在较大问题，需要筛选或是另寻其他问答数据集。</li>
-<li>模板怪异：模板二的问法闲的古怪，可能需要修改或删去。</li>
 </ul>
 </li>
 </ul>
