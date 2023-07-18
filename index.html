@@ -368,6 +368,198 @@ code {
 <h2 id="%E5%8F%B8%E6%B3%95%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E9%80%A0%E6%96%B0">司法大模型数据集构造(新)</h2>
 <ul>
 <li>
+<p>实体关系抽取（<code>IE_LEVEN</code>）</p>
+<ul>
+<li>
+<p>类型：有标签数据；来源：<a href="https://github.com/thunlp/LEVEN">LEVEN</a></p>
+  <details>
+  <summary>统计信息</summary>
+  <p></p>
+<pre class="hljs"><code><div>Fields                       instruction, input, output
+Number of data               10602
+
+Max total length of fields   3510
+Min total length of fields   321
+Ave total length of fields   816.8
+
+Number of data &lt;= 256        0 (0.0%)
+Number of data &lt;= 512        2115 (19.9%)
+Number of data &lt;= 1024       8366 (78.9%)
+Number of data &lt;= 2048       10378 (97.9%)
+</div></code></pre>
+  </details>
+</li>
+<li>
+<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
+  <details>
+  <summary>样例一</summary>
+  <p></p>
+<pre class="hljs"><code><div>[Input] 以下是一起司法案件：
+2014年10月14日13时许，被告人宋某某在宁安市某镇某村道路西侧清理自家地内的玉米秸秆时，用打火机点燃玉米秸秆，由于疏忽管理，火苗窜至地邻被害人孙某某（男，46岁）的耕地内，将孙某某种植的玉米烧毁，又将耕地内被害人刘某（男，51岁）种植的5000棵果树烧毁。经鉴定：过火林地面积为6.9公顷。经侦查，被告人宋某某于2014年10月23日被公安机关抓获。案发后被告人宋士军与被害人孙某某、刘臣陈达成和解协议，由被告人赔偿被害人经济损失30000元，被害人对被告人表示谅解。
+
+请识别出该法律案件中的所有事件触发词，以及其所对应的事件类型。例如，事件触发词'盗走'对应事件类型'盗窃财物'。请用JSON数组输出结果，数组中的每个元素也是一个数组，形如：[事件触发词, 事件类型]。
+</div></code></pre>
+<pre class="hljs"><code><div>[Output] [
+    [&quot;点燃&quot;, &quot;放火&quot;],
+    [&quot;烧毁&quot;, &quot;毁坏财物&quot;],
+    [&quot;鉴定&quot;, &quot;鉴定&quot;],
+    [&quot;抓获&quot;, &quot;拘捕&quot;],
+    [&quot;和解&quot;, &quot;谅解&quot;],
+    [&quot;协议&quot;, &quot;签订合同/订立协议&quot;],
+    [&quot;赔偿&quot;, &quot;赔偿&quot;],
+    [&quot;经济损失&quot;, &quot;受损&quot;],
+    [&quot;谅解&quot;, &quot;谅解&quot;]
+]
+</div></code></pre>
+  </details>
+  <details>
+  <summary>样例二</summary>
+  <p></p>
+<pre class="hljs"><code><div>[Input] 以下是一起司法案件：
+自2015年11月开始，被告人张某伙同被告人陈某甲共同通过互联网进行假冒卷烟的非法买卖。合伙期间，被告人张某出资2000元，被告人陈某甲出资14000余元，由被告人张某管理资金，通过网上联系从福建、广东等地以明显低于市场价的价格购买假冒黄芙蓉王、中华、精品白沙等品牌卷烟，通过在微信朋友圈打广告、添加附近的人为好友等方式进行销售，所得利润二被告人均分。被告人陈某甲协助接送假冒卷烟并偶尔收取下线货款。在被告人张某、陈某甲合伙期间，二人通过微信联系，从上线张某、汤某某、吴某某等人处购买假冒卷烟金额达36.5万余元。2017年2月被告人陈某甲退出合伙后，被告人张某继续单独经营，又从上线吴某某、被告人方某甲处购得金额8.8万余元的假冒卷烟用于网上销售。已查明的销售下线：向汪某某、向刘某、王某等12人销售金额共计192978元，其中，被告人张某与陈某甲伙同期间销售金额为167788元。被告人方某甲自2017年5月开始通过微信与被告人张某联系，向被告人张某销售假冒伪劣卷烟金额达55420元。其中4000元因被告人方某甲被公安机关抓获未能交易成功。另被告人方某甲还通过微信向微信名为“AA-神经大叔2号”、“下一个转角”的下线销售假冒伪劣卷烟金额约3000元。案发后，公安机关扣押被告人张某、陈某甲违法所得共计182600元。
+
+请识别出该法律案件中的所有事件触发词，以及其所对应的事件类型。例如，事件触发词'盗走'对应事件类型'盗窃财物'。请用JSON数组输出结果，数组中的每个元素也是一个数组，形如：[事件触发词, 事件类型]。
+</div></code></pre>
+<pre class="hljs"><code><div>[Output] [
+    [&quot;假冒&quot;, &quot;欺骗&quot;],
+    [&quot;买卖&quot;, &quot;买卖&quot;],
+    [&quot;出资&quot;, &quot;支付/给付&quot;],
+    [&quot;管理&quot;, &quot;组织/安排&quot;],
+    [&quot;联系&quot;, &quot;联络&quot;],
+    [&quot;购买&quot;, &quot;买入&quot;],
+    [&quot;假冒&quot;, &quot;冒充&quot;],
+    [&quot;销售&quot;, &quot;卖出&quot;],
+    [&quot;所得&quot;, &quot;获利&quot;],
+    [&quot;利润&quot;, &quot;获利&quot;],
+    [&quot;均分&quot;, &quot;分赃&quot;],
+    [&quot;协助&quot;, &quot;帮助/救助&quot;],
+    [&quot;接送&quot;, &quot;运输/运送&quot;],
+    [&quot;收取&quot;, &quot;同意/接受&quot;],
+    [&quot;退出&quot;, &quot;放弃/停止&quot;],
+    [&quot;购得&quot;, &quot;买入&quot;],
+    [&quot;假冒伪劣&quot;, &quot;冒充&quot;],
+    [&quot;抓获&quot;, &quot;拘捕&quot;],
+    [&quot;交易&quot;, &quot;买卖&quot;],
+    [&quot;微信&quot;, &quot;联络&quot;],
+    [&quot;扣押&quot;, &quot;搜查/扣押&quot;]
+]
+</div></code></pre>
+  </details>
+</li>
+<li>
+<p>模板二（<code>proportion=&quot;full&quot;</code>）</p>
+  <details>
+  <summary>样例一</summary>
+  <p></p>
+<pre class="hljs"><code><div>[Input] 以下是一起司法案件：
+2013年2月13日14时许，被告人吴某伙同余某、曹某（均已判刑）等人酒后到光山县纺织路博文网吧上网。因充值付费之事，余某、曹某看网吧网管周某某不顺眼意欲教训他。后周某某向余某等人索要充值款时，余某对其拳打脚踢并接过吴某递来的刀对周某某进行威胁。当日15时许，被告人吴某等人无故对在该网吧上网的刘某拳打脚踢，并持刀威胁。后在刘某走到网吧门口时，吴某持拖把棍殴打刘某。经法医鉴定，刘某的损伤程度不构成轻伤。经本院主持调解，吴某的亲属一次性赔偿刘某经济损失人民币6000元，被害人对吴某表示谅解并撤回附带民事诉讼。
+
+请识别出该法律案件中的所有事件触发词及其对应的事件类型。例如，事件触发词'盗走'对应事件类型'盗窃财物'。
+</div></code></pre>
+<pre class="hljs"><code><div>[Output] 该案件中的事件触发词和对应的事件类型有如下这些：
+- 触发词：伙同；类型：共谋
+- 触发词：充值；类型：支付/给付
+- 触发词：拳打脚踢；类型：伤害人身
+- 触发词：威胁；类型：威胁/强迫
+- 触发词：持刀；类型：持械/持枪
+- 触发词：殴打；类型：伤害人身
+- 触发词：法医鉴定；类型：鉴定
+- 触发词：损伤；类型：受伤
+- 触发词：赔偿；类型：赔偿
+- 触发词：经济损失；类型：受损
+- 触发词：表示；类型：同意/接受
+- 触发词：谅解；类型：谅解
+</div></code></pre>
+  </details>
+  <details>
+  <summary>样例二</summary>
+  <p></p>
+<pre class="hljs"><code><div>[Input] 以下是一起司法案件：
+一、伪造国家机关证件 2015年11月，被告人孙文寿与周某2相识并同居生活。周某2欲让自己的孙子到江都区仙女镇上学，需要在仙女镇买房，被告人孙文寿谎称自己是做工程的，开发商因欠其工程款抵给其一套座落在仙女镇的商品房，并承诺此房赠送给周某2，当周某2向其索要房产证时，被告人孙文寿产生了伪造房产证的念头。2016年8月的一天，被告人孙文寿让他人为其伪造了一本扬州市江都区世纪名郡小区2幢304室的房屋所有权证，该证编号为扬房权证江都字第××号，所有权人为周某2、张俊贤（周某2的孙子），登记时间为2016年6月22日，登记机关为扬州市住房保障和房产管理局，并将该伪造的房屋所有权证交给周某2。二、诈骗 2016年9月10日，被告人孙文寿在扬州市江都区吴桥镇大众村，谎称将要赠送给周某2的上述房屋涨价，骗得周某2、张某母子的人民币15000元，后给周某2人民币1000元，实际骗得人民币14000元。至宣告判决前，被告人孙文寿未退出赃款。
+
+请识别出该法律案件中的所有事件触发词及其对应的事件类型。例如，事件触发词'盗走'对应事件类型'盗窃财物'。
+</div></code></pre>
+<pre class="hljs"><code><div>[Output] 该案件中的事件触发词和对应的事件类型有如下这些：
+- 触发词：让；类型：要求/请求
+- 触发词：买房；类型：买入
+- 触发词：谎称；类型：欺骗
+- 触发词：赠送给；类型：支付/给付
+- 触发词：伪造；类型：伪造
+- 触发词：让；类型：指使/教唆
+- 触发词：交给；类型：支付/给付
+- 触发词：骗；类型：欺骗
+- 触发词：退出；类型：退赃
+</div></code></pre>
+  </details>
+</li>
+<li>
+<p>潜在问题（暂无）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>实体关系抽取（<code>IE_JE</code>）</p>
+<ul>
+<li>
+<p>类型：有标签数据；来源：<a href="https://github.com/DUTIR-LegalIntelligence/JointExtraction4Legal">JointExtraction</a></p>
+  <details>
+  <summary>统计信息</summary>
+  <p></p>
+<pre class="hljs"><code><div>Fields                       instruction, input, output
+Number of data               1415
+
+Max total length of fields   1128
+Min total length of fields   262
+Ave total length of fields   442.4
+
+Number of data &lt;= 256        0 (0.0%)
+Number of data &lt;= 512        1111 (78.5%)
+Number of data &lt;= 1024       1413 (99.9%)
+Number of data &lt;= 2048       1415 (100.0%)
+</div></code></pre>
+  </details>
+</li>
+<li>
+<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
+  <details>
+  <summary>样例一</summary>
+  <p></p>
+<pre class="hljs"><code><div>[Input] 以下是一起毒品走私案件：
+经审理查明：2014年8月30日14时许，被告人曾某某在本市南明区富源北路东站附近，通过电话联系，贩卖毒品给宋某时被公安机关抓获，当场收缴毒品0.1克。经贵阳市公安局毒品检验中心鉴定该毒品系海洛因。
+
+请提取出这起案件中的所有实体和它们的关系。实体类型包括：'涉案人'、'时间'、'地点'、'毒品'、和'重量'。关系包括：'拥有'、'提供住所'、'走私'、和'贩卖'。请用JSON数组输出结果，数组中的每个元素也是一个数组，形如：[{实体1: 实体1的类型}, {实体2: 实体2的类型}, 实体1和实体2的关系]。
+</div></code></pre>
+<pre class="hljs"><code><div>[Output] [
+    [{&quot;曾某某&quot;: &quot;涉案人&quot;}, {&quot;宋某&quot;: &quot;涉案人&quot;}, &quot;贩卖&quot;],
+    [{&quot;曾某某&quot;: &quot;涉案人&quot;}, {&quot;海洛因&quot;: &quot;毒品&quot;}, &quot;走私&quot;]
+]
+</div></code></pre>
+  </details>
+  <details>
+  <summary>样例二</summary>
+  <p></p>
+<pre class="hljs"><code><div>[Input] 以下是一起毒品走私案件：
+公诉机关指控，2011年5月29日晚，被告人徐某在本区南桥镇解放新村181号502室其暂住处内，先后容留谷某、朱某、潘某三人吸食毒品甲基苯丙胺约0.5克。
+
+请提取出这起案件中的所有实体和它们的关系。实体类型包括：'涉案人'、'时间'、'地点'、'毒品'、和'重量'。关系包括：'拥有'、'提供住所'、'走私'、和'贩卖'。请用JSON数组输出结果，数组中的每个元素也是一个数组，形如：[{实体1: 实体1的类型}, {实体2: 实体2的类型}, 实体1和实体2的关系]。
+</div></code></pre>
+<pre class="hljs"><code><div>[Output] [
+    [{&quot;徐某&quot;: &quot;涉案人&quot;}, {&quot;谷某&quot;: &quot;涉案人&quot;}, &quot;提供住所&quot;],
+    [{&quot;徐某&quot;: &quot;涉案人&quot;}, {&quot;朱某&quot;: &quot;涉案人&quot;}, &quot;提供住所&quot;],
+    [{&quot;徐某&quot;: &quot;涉案人&quot;}, {&quot;潘某&quot;: &quot;涉案人&quot;}, &quot;提供住所&quot;]
+]
+</div></code></pre>
+  </details>
+</li>
+<li>
+<p>潜在问题：</p>
+<ul>
+<li>类型过于单一：原数据集仅涉及毒品走私案件，且只有五种实体类型和四种实体关系。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
 <p>司法阅读理解（<code>QA_CJRC</code>）</p>
 <ul>
 <li>
@@ -514,10 +706,7 @@ D. 本票是由出票人本人对持票人付款的票据
 </div></code></pre>
 </li>
 <li>
-<p>潜在问题：</p>
-<ul>
-<li>逻辑顺序：按照推理的逻辑顺序，应当先给出解析再给出答案。ChatGPT生成的解析中，一部分最后给出了答案而另一部分没有，因而需要进行筛选。</li>
-</ul>
+<p>潜在问题（暂无）</p>
 </li>
 </ul>
 </li>
