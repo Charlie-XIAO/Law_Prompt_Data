@@ -831,7 +831,68 @@ Number of data &lt;= 2048       9659 (100.0%)
   </details>
 </li>
 <li>
-<p>潜在问题（暂无）</p>
+<p>潜在问题</p>
+<ul>
+<li>法条错误：ChatGPT调整的回答中，有部分提及了具体的法条，但无法保证正确性。通过调整prompt较难进行稳定的限制，因而可能需要后续将所有法条编号均改为<code>第X条</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Lawyer LLaMA 法律咨询回复（含法条）（<code>QA_LLLAMA_LAWA</code>）</p>
+<ul>
+<li>
+<p>类型：开源训练数据；数据来源：<a href="https://github.com/AndrewZhe/lawyer-llama">Lawyer LLaMA</a></p>
+</li>
+<li>
+<p>处理：1. 利用ChatGPT将原数据集中的问题用重写为通顺的语言，并重新生成了答案。</p>
+  <details>
+  <summary>统计信息</summary>
+  <p></p>
+<pre class="hljs"><code><div>Fields                       instruction, input, output
+Number of data               955
+
+Max total length of fields   1007
+Min total length of fields   71
+Ave total length of fields   417.2
+
+Number of data &lt;= 256        139 (14.6%)
+Number of data &lt;= 512        719 (75.3%)
+Number of data &lt;= 1024       955 (100.0%)
+Number of data &lt;= 2048       955 (100.0%)
+</div></code></pre>
+  </details>
+</li>
+<li>
+<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
+  <details>
+  <summary>样例一</summary>
+  <p></p>
+<pre class="hljs"><code><div>[Input] 结婚不满4个月后，若怀孕已达7个月，是否可以要求退还彩礼？另外，关于孩子的抚养费，应该要求多少？
+</div></code></pre>
+<pre class="hljs"><code><div>[Output] 根据《民法典》第一千零八十五条，离婚后，子女由一方直接抚养的，另一方应当负担部分或全部抚养费。负担费用的多少和期限的长短，由双方协议；协议不成的，由人民法院判决。因此，关于孩子的抚养费应由双方协商确定或由法院判决。
+
+至于彩礼的退还问题，根据《民法典》第一百九十六条，请求支付抚养费的请求权不适用诉讼时效的规定。因此，如果婚后不满4个月，妻子已怀孕达到7个月，可以请求退还彩礼。
+
+然而，关于具体退还彩礼的金额，根据提供的法律条文和事实，无法得出明确的结论。退还彩礼的具体金额应根据双方的协商或法院的判决来确定，可能受到具体情况的影响。
+
+总结：根据《民法典》第一千零八十五条，离婚后子女抚养费应由双方协商或法院判决确定。根据《民法典》第一百九十六条，请求支付抚养费的请求权不适用诉讼时效的规定，因此可以请求退还彩礼。然而，具体退还彩礼的金额需要根据具体情况协商或由法院判决确定。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>样例二</summary>
+  <p></p>
+<pre class="hljs"><code><div>[Input] 我发现我妻子与我的朋友不止一次发生性关系，还与其他人有过类似情况，我可以获得什么？
+</div></code></pre>
+<pre class="hljs"><code><div>[Output] 根据《民法典》第一千零九十一条，如果您发现妻子与他人发生性关系，导致离婚的情形，您作为无过错方有权请求损害赔偿。此外，根据《民法典》第一千零四十一条，婚姻家庭受国家保护，保护妇女的合法权益。因此，您可以根据相关法律规定，请求获得离婚赔偿。
+</div></code></pre>
+  </details>
+</li>
+<li>
+<p>潜在问题</p>
+<ul>
+<li>类型单一：原数据集中只涉及民法典相关的问题，且几乎全部与婚姻法有关。</li>
+</ul>
 </li>
 </ul>
 </li>
