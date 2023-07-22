@@ -366,248 +366,234 @@ code {
     });
   </script>
 <h2 id="%E5%8F%B8%E6%B3%95%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E9%80%A0%E6%96%B0">司法大模型数据集构造(新)</h2>
+<h4 id="%E6%95%B0%E6%8D%AE%E9%9B%86%E6%A6%82%E8%A7%88">数据集概览</h4>
+<details>
+<summary>07/22（<code>belle1</code>格式）</summary>
+<p></p>
+<p>将已构造的数据集长度限制为2048后，采样1%的数据被用作验证集（1774条），剩余数据被用作训练集（176112条）。各个数据集大小详情如下：</p>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IE_LEVEN</code></td>
+<td>10308</td>
+</tr>
+<tr>
+<td><code>IE_JE</code></td>
+<td>1415</td>
+</tr>
+<tr>
+<td><code>QA_CJRC</code></td>
+<td>38099</td>
+</tr>
+<tr>
+<td><code>QA_LAWGPT_LAWA</code></td>
+<td>56623</td>
+</tr>
+<tr>
+<td><code>QA_LLLAMA_JE</code></td>
+<td>6491</td>
+</tr>
+<tr>
+<td><code>QA_LLLAMA_LA</code></td>
+<td>9659</td>
+</tr>
+<tr>
+<td><code>QA_LLLAMA_LAWA</code></td>
+<td>955</td>
+</tr>
+<tr>
+<td><code>QA_JECQA</code></td>
+<td>23155</td>
+</tr>
+<tr>
+<td><code>QA_YC</code></td>
+<td>27407</td>
+</tr>
+<tr>
+<td><code>ZY_YQZY</code></td>
+<td>3774</td>
+</tr>
+<tr>
+<td>Validation (1%)</td>
+<td>1774</td>
+</tr>
+<tr>
+<td>Training</td>
+<td>176112</td>
+</tr>
+</tbody>
+</table>
+</details>
+<hr>
+<h4 id="%E6%95%B0%E6%8D%AE%E6%9E%84%E9%80%A0%E8%AF%A6%E6%83%85llama2%E6%A0%BC%E5%BC%8F">数据构造详情（<code>llama2</code>格式）</h4>
 <ul>
 <li>
-<p>实体关系抽取（<code>IE_LEVEN</code>）</p>
-<ul>
-<li>
-<p>类型：有标签数据；来源：<a href="https://github.com/thunlp/LEVEN">LEVEN</a></p>
+<p>事件触发词识别（<code>IE_LEVEN</code>）</p>
   <details>
   <summary>统计信息</summary>
   <p></p>
-<pre class="hljs"><code><div>Fields                       instruction, input, output
+<pre class="hljs"><code><div>Fields                       id, reference, instruction, input, output
 Number of data               10602
 
-Max total length of fields   3510
-Min total length of fields   321
-Ave total length of fields   816.8
+Max total length of fields   3520
+Min total length of fields   331
+Ave total length of fields   826.8
 
 Number of data &lt;= 256        0 (0.0%)
-Number of data &lt;= 512        2115 (19.9%)
-Number of data &lt;= 1024       8366 (78.9%)
-Number of data &lt;= 2048       10378 (97.9%)
+Number of data &lt;= 512        1926 (18.2%)
+Number of data &lt;= 1024       8309 (78.4%)
+Number of data &lt;= 2048       10372 (97.8%)
 </div></code></pre>
   </details>
+<ul>
+<li>
+<p>类型：有标签数据；来源：<a href="https://github.com/thunlp/LEVEN">LEVEN</a></p>
 </li>
 <li>
-<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 以下是一起司法案件：
-2014年10月14日13时许，被告人宋某某在宁安市某镇某村道路西侧清理自家地内的玉米秸秆时，用打火机点燃玉米秸秆，由于疏忽管理，火苗窜至地邻被害人孙某某（男，46岁）的耕地内，将孙某某种植的玉米烧毁，又将耕地内被害人刘某（男，51岁）种植的5000棵果树烧毁。经鉴定：过火林地面积为6.9公顷。经侦查，被告人宋某某于2014年10月23日被公安机关抓获。案发后被告人宋士军与被害人孙某某、刘臣陈达成和解协议，由被告人赔偿被害人经济损失30000元，被害人对被告人表示谅解。
-
-请识别出该法律案件中的所有事件触发词，以及其所对应的事件类型。例如，事件触发词'盗走'对应事件类型'盗窃财物'。请用JSON数组输出结果，数组中的每个元素也是一个数组，形如：[事件触发词, 事件类型]。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] [
-    [&quot;点燃&quot;, &quot;放火&quot;],
-    [&quot;烧毁&quot;, &quot;毁坏财物&quot;],
-    [&quot;鉴定&quot;, &quot;鉴定&quot;],
-    [&quot;抓获&quot;, &quot;拘捕&quot;],
-    [&quot;和解&quot;, &quot;谅解&quot;],
-    [&quot;协议&quot;, &quot;签订合同/订立协议&quot;],
-    [&quot;赔偿&quot;, &quot;赔偿&quot;],
-    [&quot;经济损失&quot;, &quot;受损&quot;],
-    [&quot;谅解&quot;, &quot;谅解&quot;]
-]
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 以下是一起司法案件：
-自2015年11月开始，被告人张某伙同被告人陈某甲共同通过互联网进行假冒卷烟的非法买卖。合伙期间，被告人张某出资2000元，被告人陈某甲出资14000余元，由被告人张某管理资金，通过网上联系从福建、广东等地以明显低于市场价的价格购买假冒黄芙蓉王、中华、精品白沙等品牌卷烟，通过在微信朋友圈打广告、添加附近的人为好友等方式进行销售，所得利润二被告人均分。被告人陈某甲协助接送假冒卷烟并偶尔收取下线货款。在被告人张某、陈某甲合伙期间，二人通过微信联系，从上线张某、汤某某、吴某某等人处购买假冒卷烟金额达36.5万余元。2017年2月被告人陈某甲退出合伙后，被告人张某继续单独经营，又从上线吴某某、被告人方某甲处购得金额8.8万余元的假冒卷烟用于网上销售。已查明的销售下线：向汪某某、向刘某、王某等12人销售金额共计192978元，其中，被告人张某与陈某甲伙同期间销售金额为167788元。被告人方某甲自2017年5月开始通过微信与被告人张某联系，向被告人张某销售假冒伪劣卷烟金额达55420元。其中4000元因被告人方某甲被公安机关抓获未能交易成功。另被告人方某甲还通过微信向微信名为“AA-神经大叔2号”、“下一个转角”的下线销售假冒伪劣卷烟金额约3000元。案发后，公安机关扣押被告人张某、陈某甲违法所得共计182600元。
-
-请识别出该法律案件中的所有事件触发词，以及其所对应的事件类型。例如，事件触发词'盗走'对应事件类型'盗窃财物'。请用JSON数组输出结果，数组中的每个元素也是一个数组，形如：[事件触发词, 事件类型]。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] [
-    [&quot;假冒&quot;, &quot;欺骗&quot;],
-    [&quot;买卖&quot;, &quot;买卖&quot;],
-    [&quot;出资&quot;, &quot;支付/给付&quot;],
-    [&quot;管理&quot;, &quot;组织/安排&quot;],
-    [&quot;联系&quot;, &quot;联络&quot;],
-    [&quot;购买&quot;, &quot;买入&quot;],
-    [&quot;假冒&quot;, &quot;冒充&quot;],
-    [&quot;销售&quot;, &quot;卖出&quot;],
-    [&quot;所得&quot;, &quot;获利&quot;],
-    [&quot;利润&quot;, &quot;获利&quot;],
-    [&quot;均分&quot;, &quot;分赃&quot;],
-    [&quot;协助&quot;, &quot;帮助/救助&quot;],
-    [&quot;接送&quot;, &quot;运输/运送&quot;],
-    [&quot;收取&quot;, &quot;同意/接受&quot;],
-    [&quot;退出&quot;, &quot;放弃/停止&quot;],
-    [&quot;购得&quot;, &quot;买入&quot;],
-    [&quot;假冒伪劣&quot;, &quot;冒充&quot;],
-    [&quot;抓获&quot;, &quot;拘捕&quot;],
-    [&quot;交易&quot;, &quot;买卖&quot;],
-    [&quot;微信&quot;, &quot;联络&quot;],
-    [&quot;扣押&quot;, &quot;搜查/扣押&quot;]
-]
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>模板二（<code>proportion=&quot;full&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 以下是一起司法案件：
-2013年2月13日14时许，被告人吴某伙同余某、曹某（均已判刑）等人酒后到光山县纺织路博文网吧上网。因充值付费之事，余某、曹某看网吧网管周某某不顺眼意欲教训他。后周某某向余某等人索要充值款时，余某对其拳打脚踢并接过吴某递来的刀对周某某进行威胁。当日15时许，被告人吴某等人无故对在该网吧上网的刘某拳打脚踢，并持刀威胁。后在刘某走到网吧门口时，吴某持拖把棍殴打刘某。经法医鉴定，刘某的损伤程度不构成轻伤。经本院主持调解，吴某的亲属一次性赔偿刘某经济损失人民币6000元，被害人对吴某表示谅解并撤回附带民事诉讼。
-
-请识别出该法律案件中的所有事件触发词及其对应的事件类型。例如，事件触发词'盗走'对应事件类型'盗窃财物'。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 该案件中的事件触发词和对应的事件类型有如下这些：
-- 触发词：伙同；类型：共谋
-- 触发词：充值；类型：支付/给付
-- 触发词：拳打脚踢；类型：伤害人身
-- 触发词：威胁；类型：威胁/强迫
-- 触发词：持刀；类型：持械/持枪
-- 触发词：殴打；类型：伤害人身
-- 触发词：法医鉴定；类型：鉴定
-- 触发词：损伤；类型：受伤
-- 触发词：赔偿；类型：赔偿
-- 触发词：经济损失；类型：受损
-- 触发词：表示；类型：同意/接受
-- 触发词：谅解；类型：谅解
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 以下是一起司法案件：
-一、伪造国家机关证件 2015年11月，被告人孙文寿与周某2相识并同居生活。周某2欲让自己的孙子到江都区仙女镇上学，需要在仙女镇买房，被告人孙文寿谎称自己是做工程的，开发商因欠其工程款抵给其一套座落在仙女镇的商品房，并承诺此房赠送给周某2，当周某2向其索要房产证时，被告人孙文寿产生了伪造房产证的念头。2016年8月的一天，被告人孙文寿让他人为其伪造了一本扬州市江都区世纪名郡小区2幢304室的房屋所有权证，该证编号为扬房权证江都字第××号，所有权人为周某2、张俊贤（周某2的孙子），登记时间为2016年6月22日，登记机关为扬州市住房保障和房产管理局，并将该伪造的房屋所有权证交给周某2。二、诈骗 2016年9月10日，被告人孙文寿在扬州市江都区吴桥镇大众村，谎称将要赠送给周某2的上述房屋涨价，骗得周某2、张某母子的人民币15000元，后给周某2人民币1000元，实际骗得人民币14000元。至宣告判决前，被告人孙文寿未退出赃款。
-
-请识别出该法律案件中的所有事件触发词及其对应的事件类型。例如，事件触发词'盗走'对应事件类型'盗窃财物'。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 该案件中的事件触发词和对应的事件类型有如下这些：
-- 触发词：让；类型：要求/请求
-- 触发词：买房；类型：买入
-- 触发词：谎称；类型：欺骗
-- 触发词：赠送给；类型：支付/给付
-- 触发词：伪造；类型：伪造
-- 触发词：让；类型：指使/教唆
-- 触发词：交给；类型：支付/给付
-- 触发词：骗；类型：欺骗
-- 触发词：退出；类型：退赃
-</div></code></pre>
-  </details>
+<p>处理（暂无）</p>
 </li>
 <li>
 <p>潜在问题（暂无）</p>
+</li>
+<li>
+<p>模板一（全部数据）</p>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>以下是一起司法案件：
+被告人孙某某系恒祥公司法定代表人、董事长，海韵公司股东、实际控制人，在二公司经营期间，为谋取不正当利益，2013年至2017年向多名国家工作人员行贿。1、2016年下半年，被告人孙某某为恒祥公 司非法从汇通路桥建设集团有限公司转包郑龙线工程，向时任故城县交通局局长郭金玉（另案处理）行贿100万元。2、2016年至2017年，被告人孙某某为海韵公司从故城县水务局承揽工程项目及顺利结算工程款，分两次向时任故城县水务局局长（于某）行贿20万元。3、2013年中秋节，被告人孙某某为海韵 公司承揽农村人口饮水安全工程，向时任故城县水务局局长王章信（另案处理）行贿5万元。4、2015年至2016年，被告人孙某某为公司违规承揽工程，分两次向故城县住建局招标办主任常彪（另案处理）行贿1.9万元。案发后，被告人孙某某主动到检察机关投案并如实供述犯罪事实，向检察机关提供他人犯 罪线索，从而使检察机关侦破其他案件。
+
+请识别出该法律案件中的所有事件触发词，以及其所对应的事件类型。例如，事件触发词'盗走'对应事件类型'盗窃财物'。请用JSON数组输出结果，数组中的每个元素也是一个数组，形如：[事件触发词,  事件类型]。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输出</summary>
+  <p></p>
+<pre class="hljs"><code><div>[
+    [&quot;谋取&quot;, &quot;获利&quot;],
+    [&quot;行贿&quot;, &quot;贿赂&quot;],
+    [&quot;结算&quot;, &quot;支付/给付&quot;],
+    [&quot;投案&quot;, &quot;投案&quot;],
+    [&quot;供述&quot;, &quot;供述&quot;],
+    [&quot;提供&quot;, &quot;提供&quot;]
+]
+</div></code></pre>
+  </details>
+</li>
+<li>
+<p>模板二（全部数据）</p>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>以下是一起司法案件：
+自2012年7月起，被告人甘某某在晋江市罗山街道北祥46号二楼一无名加工厂内，在未经“鸿星尔克”（ERKE）注册商标所有人授权许可的情况下，组织工人加工生产标有“鸿星尔克”商标标识的滑板鞋。2013 年8月7日，公安机关在上述加工厂内查获被告人甘某某，并扣押假冒“鸿星尔克”商标标识的滑板鞋511 双及半成品鞋材100双。上述被扣押的滑板鞋经注册商标所有人认定系假冒注册商标产品，每双标价人 民币199元，共计人民币101689元。
+
+请识别出该法律案件中的所有事件触发词及其对应的事件类型。例如，事件触发词'盗走'对应事件类型'盗窃财物'。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输出</summary>
+  <p></p>
+<pre class="hljs"><code><div>该案件中的事件触发词和对应的事件类型有如下这些：
+- 触发词：许可；类型：同意/接受
+- 触发词：组织；类型：组织/安排
+- 触发词：生产；类型：制造
+- 触发词：查获；类型：搜查/扣押
+- 触发词：扣押；类型：搜查/扣押
+- 触发词：假冒；类型：冒充
+</div></code></pre>
+  </details>
 </li>
 </ul>
 </li>
 <li>
 <p>实体关系抽取（<code>IE_JE</code>）</p>
-<ul>
-<li>
-<p>类型：有标签数据；来源：<a href="https://github.com/DUTIR-LegalIntelligence/JointExtraction4Legal">JointExtraction</a></p>
   <details>
   <summary>统计信息</summary>
   <p></p>
-<pre class="hljs"><code><div>Fields                       instruction, input, output
+<pre class="hljs"><code><div>Fields                       id, reference, instruction, input, output
 Number of data               1415
 
-Max total length of fields   1128
-Min total length of fields   262
-Ave total length of fields   442.4
+Max total length of fields   1135
+Min total length of fields   269
+Ave total length of fields   449.4
 
 Number of data &lt;= 256        0 (0.0%)
-Number of data &lt;= 512        1111 (78.5%)
+Number of data &lt;= 512        1083 (76.5%)
 Number of data &lt;= 1024       1413 (99.9%)
 Number of data &lt;= 2048       1415 (100.0%)
 </div></code></pre>
   </details>
+<ul>
+<li>
+<p>类型：有标签数据；来源：<a href="https://github.com/DUTIR-LegalIntelligence/JointExtraction4Legal">JointExtraction</a></p>
 </li>
 <li>
-<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 以下是一起毒品走私案件：
-经审理查明：2014年8月30日14时许，被告人曾某某在本市南明区富源北路东站附近，通过电话联系，贩卖毒品给宋某时被公安机关抓获，当场收缴毒品0.1克。经贵阳市公安局毒品检验中心鉴定该毒品系海洛因。
-
-请提取出这起案件中的所有实体和它们的关系。实体类型包括：'涉案人'、'时间'、'地点'、'毒品'、和'重量'。关系包括：'拥有'、'提供住所'、'走私'、和'贩卖'。请用JSON数组输出结果，数组中的每个元素也是一个数组，形如：[{实体1: 实体1的类型}, {实体2: 实体2的类型}, 实体1和实体2的关系]。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] [
-    [{&quot;曾某某&quot;: &quot;涉案人&quot;}, {&quot;宋某&quot;: &quot;涉案人&quot;}, &quot;贩卖&quot;],
-    [{&quot;曾某某&quot;: &quot;涉案人&quot;}, {&quot;海洛因&quot;: &quot;毒品&quot;}, &quot;走私&quot;]
-]
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 以下是一起毒品走私案件：
-公诉机关指控，2011年5月29日晚，被告人徐某在本区南桥镇解放新村181号502室其暂住处内，先后容留谷某、朱某、潘某三人吸食毒品甲基苯丙胺约0.5克。
-
-请提取出这起案件中的所有实体和它们的关系。实体类型包括：'涉案人'、'时间'、'地点'、'毒品'、和'重量'。关系包括：'拥有'、'提供住所'、'走私'、和'贩卖'。请用JSON数组输出结果，数组中的每个元素也是一个数组，形如：[{实体1: 实体1的类型}, {实体2: 实体2的类型}, 实体1和实体2的关系]。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] [
-    [{&quot;徐某&quot;: &quot;涉案人&quot;}, {&quot;谷某&quot;: &quot;涉案人&quot;}, &quot;提供住所&quot;],
-    [{&quot;徐某&quot;: &quot;涉案人&quot;}, {&quot;朱某&quot;: &quot;涉案人&quot;}, &quot;提供住所&quot;],
-    [{&quot;徐某&quot;: &quot;涉案人&quot;}, {&quot;潘某&quot;: &quot;涉案人&quot;}, &quot;提供住所&quot;]
-]
-</div></code></pre>
-  </details>
+<p>处理（暂无）</p>
 </li>
 <li>
 <p>潜在问题：</p>
 <ul>
-<li>类型过于单一：原数据集仅涉及毒品走私案件，且只有五种实体类型和四种实体关系。</li>
+<li>类型单一：原数据集仅涉及毒品走私案件，且只有五种实体类型和四种实体关系。</li>
 </ul>
+</li>
+<li>
+<p>模板一（全部数据）</p>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>以下是一起毒品走私案件：
+广州市花都区人民检察院指控，2014年1月17日16时许，被告人黄某与举报人何某通过电话约定后，举 报人何某去到花都区狮岭镇吉园街36号福来出租屋501房，以300元的价格向被告人黄某购得两小包白色晶体（经鉴定：送检白色晶体2包，净重1.4克，检出甲基苯丙胺成分）。交易后，被民警当场人赃并获。
+
+请提取出这起案件中的所有实体和它们的关系。实体类型包括：'涉案人'、'时间'、'地点'、'毒品'、和'重量'。关系包括：'拥有'、'提供住所'、'走私'、和'贩卖'。请用JSON数组输出结果，数组中的每个元素也是一个数组，形如：[{实体1: 实体1的类型}, {实体2: 实体2的类型}, 实体1和实体2的关系]。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输出</summary>
+  <p></p>
+<pre class="hljs"><code><div>[
+    [{&quot;黄某&quot;: &quot;涉案人&quot;}, {&quot;何某&quot;: &quot;涉案人&quot;}, &quot;贩卖&quot;],
+    [{&quot;黄某&quot;: &quot;涉案人&quot;}, {&quot;两小包白色晶体&quot;: &quot;毒品&quot;}, &quot;走私&quot;]
+]
+</div></code></pre>
+  </details>
 </li>
 </ul>
 </li>
 <li>
 <p>司法阅读理解（<code>QA_CJRC</code>）</p>
+  <details>
+  <summary>统计信息</summary>
+  <p></p>
+<pre class="hljs"><code><div>Fields                       id, reference, instruction, input, output
+Number of data               38099
+
+Max total length of fields   1403
+Min total length of fields   162
+Ave total length of fields   667.6
+
+Number of data &lt;= 256        397 (1.0%)
+Number of data &lt;= 512        13327 (35.0%)
+Number of data &lt;= 1024       33040 (86.7%)
+Number of data &lt;= 2048       38099 (100.0%)
+</div></code></pre>
+  </details>
 <ul>
 <li>
 <p>类型：有标签数据；来源：<a href="https://github.com/china-ai-law-challenge/CAIL2019/tree/master/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3">CJRC</a></p>
 </li>
 <li>
-<p>处理：1. 原数据集中存在大量HTML转义字符，现将其全部替换为常规可读字符。2. 所有问题均用ChatGPT生成答案以扩充信息量。</p>
-  <details>
-  <summary>统计信息</summary>
-  <p></p>
-<pre class="hljs"><code><div>Fields                       instruction, input, output
-Number of data               38099
-
-Max total length of fields   1394
-Min total length of fields   153
-Ave total length of fields   658.6
-
-Number of data &lt;= 256        587 (1.5%)
-Number of data &lt;= 512        13797 (36.2%)
-Number of data &lt;= 1024       33527 (88.0%)
-Number of data &lt;= 2048       38099 (100.0%)
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 以下是一个法律案例：
-经审理查明，2011年12月6日，建湖县人民检察院依法对被告人秦某涉嫌受贿一案立案侦查。2012年11月27日，建湖县人民法院作出（2012）建刑二初字第0094号刑事判决，以秦某犯受贿罪，判处有期徒刑十年三个月，并处没收财产人民币二万元。秦某不服判决，上诉至盐城市中级人民法院，该院裁定撤销原判，发回重审。2013年12月23日，建湖县人民法院作出（2013）建刑二初字第0048号判决，以秦某犯受贿罪，判处有期徒刑十年，并处没收财产二万元。秦某不服判决，继续上诉。在此期间，秦妻自杀身亡。被告人秦某为帮其父秦某减轻罪责，在得知秦某受贿案件将于2014年4月份二审开庭后，于2014年3、4月份期间，多次打电话、发手机短信给被告人祁某、颜某、程某，诉说其母因秦某案自杀的遭遇，让被告人祁某等人改变证词。被告人颜某于2014年3月27日在摩登经典茶社向秦某的律师作了改变以前证词的陈述，被告人祁某、程某于2014年4月8日在秦某受贿案二审庭审时，出庭作证，分别改变了以前的证词。但盐城市中级人民法院未采纳被告人祁某、颜某、程某的虚假陈述，二审裁定驳回上诉，维持原判。
-
-请问：被告人颜某于何时何地改变的证词？
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 被告人颜某于2014年3月27日在摩登经典茶社改变证词。推理过程：根据案件描述，被告人秦某向被告人祁某、颜某、程某述说其母自杀遭遇，并要求他们改变证词。同时，案件描述中提到颜某在2014年3月27日向秦某的律师作出改变之前证词的陈述，因此可以推断颜某在摩登经典茶社改变证词的地点和时间。
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 以下是一个法律案例：
-本院经审理查明:2013年12月27日贺x16与湘潭县农村信用合作联社签订《个人贷款合同》,约定借款700万元,借款期限为12个月,贷款利率按月利率9.5‰计算,逾期罚息利率在原借款利率基础上加收40%,借款人贺x16未按照约定偿还本合同下借款本息及其他应付款项构成违约,借款人违约,贷款人有权宣布合同到期,并立即收回未偿还款项借款为保证贷款同日,湘潭县农村信用合作联社如实发放贷款当日,贺x16与原告恒宇担保签订了《委托担保合同》,合同约定,贺x16委托恒宇担保对其与湘潭县农村信用合作联社签订的《个人贷款合同》700万元借款提供担保,贺x16未履行或未完全履行本合同第六条约定义务的,恒宇担保有权要求贺x16按照本合同约定的被担保的主债权数额的10%支付违约金贺x16未按照主合同约定按期清偿债务,造成恒宇担保为贺x16向湘潭县农村信用合作联社代偿的,应按代偿数额向恒宇担保支付每日万分之十五的代偿利息担保债权的范围包括借款本金、利息、违约金、损害赔偿金、实现债权的费用(诉讼费用、律师代理费、财产保全费、公告费等)2013年12月26日,原告恒宇担保与湘潭县农村信用合作联社签订了《最高额保证合同》,约定恒宇担保为贺x16与农村信用联社之间700万元借款提供保证担保保证方式为连带责任保证,保证人的保证期间为主合同约定的债务人履行债务期限届满之日起二年若发生借款合同约定的事项,导致借款合同项下债务提前到期的,湘潭县农村信用联社有权要求恒宇担保提前履行保证责任,恒宇担保保证期间自主合同债务提前到期之日起二年恒宇担保不按本合同约定履行保证责任的,湘潭县农村信用合作联社可以直接从保证人的任何账户中划收相关款项2013年12月27日,原告恒宇担保与贺x16以及被告宏兴隆、胡x4签订《保证反担保合同》,约定:为确保恒宇担保债权的实现,贺x16以及被告宏兴隆、胡x4自愿为贺x16作为恒宇担保的反担保保证人,提供保证反担保保证方式为连带保证责任保证合同担保的范围包括主合同项下的债务本金、利息、逾期利息、罚息、复利、手续费、违约金、损害赔偿金、实现债权的费用(包括但不限于诉讼费、仲裁费、执行费、保全费、鉴定费、律师代理费、差旅费等及其他一切费用)另,贺x16向原告恒宇担保交纳了140万元保证金
-
-请问：贺x16向农村信用合作社约定借款多少元？
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 贺x16向农村信用合作社约定借款700万元（70,000,000元）。
-</div></code></pre>
-  </details>
+<p>处理：</p>
+<ul>
+<li>原数据集中存在大量HTML转义字符，现将其全部替换为常规可读字符。</li>
+<li>所有问题均用ChatGPT生成答案以扩充信息量。</li>
+</ul>
 </li>
 <li>
 <p>潜在问题</p>
@@ -615,278 +601,304 @@ Number of data &lt;= 2048       38099 (100.0%)
 <li>一对多：每段案情对应多个问题，当前将每一个问题分别进行构造。可以考虑构造一部分双问题数据或三问题数据（如果长度允许）。</li>
 </ul>
 </li>
+<li>
+<p>模板一（全部数据）</p>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>以下是一个法律案例：
+经审理查明：2014年7月15日凌晨1时许，被告人王2某为和前妻即被害人尚某某复合，欲不让尚某某外 出，趁尚某某与其姐姐被害人尚某甲熟睡之际，将液化气接上管子塞进被害人睡觉的卧室门缝里欲将被害人呛晕。尚某某闻到气味醒来后向王2某提出质问，王2某担心尚某某及其姐姐跑掉，便随手拿起家中的铁锤殴打尚某某头部，后又殴打其姐姐尚某甲头部，并用绳子将二被害人双手捆绑至背后，强行与两个被害人发生性关系。之后王2某带两个被害人去中国人民解放军第九十一中心医院包扎，在医院门口 被民警抓获。经鉴定，被害人尚某某损伤程度为轻伤二级，尚某甲损伤程度为轻微伤。
+
+请问：被害人尚某某是否为被告人的前妻？
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输出</summary>
+  <p></p>
+<pre class="hljs"><code><div>[Output]
+
+通过案件描述可知，被告人王2某为被害人尚某某的前夫，因为案发时想要和前妻复合，且案发时尚某 某与其姐姐尚某甲一同在屋内，因此尚某某是被告人的前妻。
+</div></code></pre>
+  </details>
+</li>
 </ul>
 </li>
 <li>
 <p>司法考试问答（<code>QA_JECQA</code>）</p>
+  <details>
+  <summary>统计信息</summary>
+  <p></p>
+<pre class="hljs"><code><div>Fields                       id, reference, instruction, input, output
+Number of data               23159
+
+Max total length of fields   3259
+Min total length of fields   47
+Ave total length of fields   512.3
+
+Number of data &lt;= 256        1495 (6.5%)
+Number of data &lt;= 512        12716 (54.9%)
+Number of data &lt;= 1024       22841 (98.6%)
+Number of data &lt;= 2048       23155 (100.0%)
+</div></code></pre>
+  </details>
 <ul>
 <li>
 <p>类型：有标签数据；来源：<a href="https://github.com/thunlp/jec-qa">JEC-QA</a></p>
 </li>
 <li>
-<p>处理：为了扩充数据的信息量和逻辑性，将题目和答案一并输入ChatGPT，并要求其生成答案的详细推理。</p>
-  <details>
-  <summary>统计信息</summary>
-  <p></p>
-<pre class="hljs"><code><div>Fields                       instruction, input, output
-Number of data               23159
-
-Max total length of fields   3249
-Min total length of fields   37
-Ave total length of fields   502.4
-
-Number of data &lt;= 256        1674 (7.2%)
-Number of data &lt;= 512        13265 (57.3%)
-Number of data &lt;= 1024       22865 (98.7%)
-Number of data &lt;= 2048       23155 (100.0%)
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>模板一（<code>proportion=&quot;0.1&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 下列哪一行为应以玩忽职守罪论处?
-A. 法官执行判决时严重不负责任，因未履行法定执行职责，致当事人利益遭受重大损失
-B. 检察官讯问犯罪嫌疑人甲，甲要求上厕所，因检察官违规打开械具后未跟随，致甲在厕所翻窗逃跑
-C. 值班警察与女友电话聊天时接到杀人报警，又闲聊10分钟后才赶往现场，因延迟出警，致被害人被杀、歹徒逃走
-D. 市政府基建负责人因听信朋友介绍，未经审查便与对方签订建楼合同，致被骗300万元
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] C. 值班警察与女友电话聊天时接到杀人报警，又闲聊10分钟后才赶往现场，因延迟出警，致被害人被杀、歹徒逃走。
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 关于法律援助，下列哪些说法正确?
-A. 公民请求国家赔偿的，因经济困难没有委托代理人的，可以申请法律援助
-B. 法律援助机构可以安排本机构的工作人员办理法律援助案件
-C. 办理法律援助案件的律师可以从当事人收取办案费用
-D. 受指派办理法律援助案件的律师可以从法律援助机构获得法律援助办案补贴
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] A. 公民请求国家赔偿的，因经济困难没有委托代理人的，可以申请法律援助。B. 法律援助机构可以安排本机构的工作人员办理法律援助案件。D. 受指派办理法律援助案件的律师可以从法律援助机构获得法律援助办案补贴。
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>模板二（<code>proportion=&quot;full&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input]小毛于烹饪学校毕业后，到森林大酒店做厨师。森林大酒店于6月和小毛签订了为期5年的劳动合同。合同中约定试用期为半年，试用期满进行考试，若考试不合格则延长试用期半年。森林大酒店每月支付小毛工资3000元。小毛在试用期内工作认真，但由于缺少经验，半年后考试不合格，森林大酒店决定延长其试用期半年，并通知小毛，延长试用期期间，小毛的工资为原工资的50%，即1500元。小毛认为这一决定没有道理，就找森林大酒店评理。森林大酒店经理称:在延长试用期期间降低工资是森林大酒店多年的做法，对小毛不能搞特殊。有关本案中森林大酒店与小毛所签劳动合同的效力的下列评论，正确的是?
-A. 森林大酒店与小毛所签的该劳动合同无效
-B. 森林大酒店与小毛所签的该劳动合同有效
-C. 森林大酒店与小毛所签的该劳动合同部分无效
-D. 以上评论都不正确
-
-请给出答案和推理过程。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 本题的答案为：C. 森林大酒店与小毛所签的该劳动合同部分无效。
-
-解析：
-根据题目中的描述，森林大酒店与小毛签订的劳动合同约定了试用期和考试不合格延长试用期的情况。然而，延长试用期期间降低工资的条款可能违反了劳动法的规定。根据《中华人民共和国劳动合同法》第20条的规定，用人单位不得降低劳动者在试用期工作期间的工资。因此，合同中关于延长试用期期间工资减少的约定是无效的。其他部分的合同条款仍然有效，因此正确的答案是C. 森林大酒店与小毛所签的该劳动合同部分无效。
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 下列关于本票的叙述哪个是正确的?
-A. 我国票据法上的本票包括银行本票和商业本票
-B. 本票的基本当事人只有出票人和收款人
-C. 本票无须承兑
-D. 本票是由出票人本人对持票人付款的票据
-
-请给出答案和推理过程。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 本题的答案为：B. 本票的基本当事人只有出票人和收款人。C. 本票无须承兑。D. 本票是由出票人本人对持票人付款的票据。
-
-解析：
-根据我国票据法的规定，本票是一种由出票人发出，以出票人为付款人的票据。根据选项A，本票包括银行本票和商业本票，这是正确的。选项B指出本票的基本当事人只有出票人和收款人，这也是正确的。选项C指出本票无须承兑，这是正确的，与汇票不同，本票不需要一个承兑人。选项D指出本票是由出票人本人对持票人付款的票据，这也是正确的，本票是由出票人本人负责支付给收款人。综上所述，选项B、C和D是正确的，所以答案是B. 本票的基本当事人只有出票人和收款人。C. 本票无须承兑。D. 本票是由出票人本人对持票人付款的票据。
-</div></code></pre>
+<p>处理：</p>
+<ul>
+<li>为了扩充数据的信息量和逻辑性，将题目和答案一并输入ChatGPT，并要求其生成答案的详细推理。</li>
+</ul>
 </li>
 <li>
 <p>潜在问题（暂无）</p>
+</li>
+<li>
+<p>模板一（采样10%数据）</p>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>甲公司因与乙公司的合同纠纷向某仲裁委员会申请仲裁，甲公司的仲裁请求得到仲裁庭的支持。裁决作出后，乙公司向法院申请撤销仲裁裁决。法院在审查过程中，甲公司向法院申请强制执行仲裁裁决。关于本案，下列哪一说法是正确的?
+A. 法院对撤销仲裁裁决申请的审查，不影响法院对该裁决的强制执行
+B. 法院不应当受理甲公司的执行申请
+C. 法院应当受理甲公司的执行申请，同时应当告知乙公司向法院申请裁定不予执行仲裁裁决
+D. 法院应当受理甲公司的执行申请，受理后应当裁定中止执行
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>D. 法院应当受理甲公司的执行申请，受理后应当裁定中止执行。
+</div></code></pre>
+  </details>
+</li>
+<li>
+<p>模板二（全部数据）</p>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>依照我国《刑法》的规定，下列哪一行为构成间谍罪?
+A. 为境外机构窃取、刺探国家秘密的
+B. 为敌人指示轰击目标的
+C. 为境外组织非法提供情报的
+D. 为武装叛乱分子提供武器弹药的
+
+请给出答案和推理过程。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>本题的答案为：B. 为敌人指示轰击目标的。
+
+解析：
+依据我国《刑法》第111条规定，进行间谍活动是指为外国刺探、收集、竞谍我国国家秘密，为境外机 构提供内部情报，为外国提供损害我国安全、利益的情报或者为境外组织、人员提供其他危害我国安全、利益的情报行为。从选项中，只有选择B符合该定义。此选项描述了一个行为，在该行为中，个人为 敌人指示轰击目标，这明显属于提供对我国安全造成直接危害的情报行为，因此构成间谍罪。其他选项涉及不同的犯罪行为，但并不符合间谍罪的构成要件。
+</div></code></pre>
+  </details>
+</li>
+</ul>
+</li>
+<li>
+<p>LaWGPT 含法条法律咨询（<code>QA_LAWGPT_LAWA</code>）</p>
+  <details>
+  <summary>统计信息</summary>
+  <p></p>
+<pre class="hljs"><code><div>Fields                       id, reference, instruction, input, output
+Number of data               56661
+
+Max total length of fields   3554
+Min total length of fields   133
+Ave total length of fields   829.1
+
+Number of data &lt;= 256        68 (0.1%)
+Number of data &lt;= 512        3007 (5.3%)
+Number of data &lt;= 1024       47070 (83.1%)
+Number of data &lt;= 2048       56634 (100.0%)
+</div></code></pre>
+  </details>
+<ul>
+<li>
+<p>类型：开源训练数据；数据来源：<a href="https://github.com/pengxiao-song/LaWGPT">LaWGPT</a></p>
+</li>
+<li>
+<p>处理：</p>
+<ul>
+<li>原数据集中参考法条极度混乱，与法条数据集进行比对后彻底重新整理，无法找到匹配的条目则暂时删去。</li>
+<li>在更改了参考法条后，利用ChatGPT对答案也进行了相应的更改，并尽量要求其按照法律三段论的格式回答。</li>
+</ul>
+</li>
+<li>
+<p>潜在问题</p>
+<ul>
+<li>多余法条：参考法条中存在大量不需要使用到的法条。</li>
+</ul>
+</li>
+<li>
+<p>模板一（全部数据）</p>
+  <details>
+  <summary>参考法条</summary>
+  <p></p>
+<pre class="hljs"><code><div>《行政诉讼法》第十三条：人民法院不受理公民、法人或者其他组织对下列事项提起的诉讼:（一）国 防、外交等国家行为；（二）行政法规、规章或者行政机关制定、发布的具有普遍约束力的决定、命令；（三）行政机关对行政机关工作人员的奖惩、任免等决定；（四）法律规定由行政机关最终裁决的行政行为。
+《行政诉讼法》第十四条：基层人民法院管辖第一审行政案件。
+《行政诉讼法》第十五条：中级人民法院管辖下列第一审行政案件:（一）对国务院部门或者县级以上 地方人民政府所作的行政行为提起诉讼的案件；（二）海关处理的案件；（三）本辖区内重大、复杂的案件；（四）其他法律规定由中级人民法院管辖的案件。
+《行政诉讼法》第十六条：高级人民法院管辖本辖区内重大、复杂的第一审行政案件。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>如果一个企业认为某个县级以上地方人民政府的行政行为对其造成了损失，该企业可以向哪一级人民法院提起诉讼？
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输出</summary>
+  <p></p>
+<pre class="hljs"><code><div>根据《行政诉讼法》的规定，当一个企业认为某个县级以上地方人民政府的行政行为对其造成了损失时，该企业可以向中级人民法院提起诉讼。根据《行政诉讼法》第十五条第一项规定，中级人民法院管辖对县级以上地方人民政府所作的行政行为提起诉讼的案件。因此，该企业应该向中级人民法院提起诉讼。
+</div></code></pre>
+  </details>
 </li>
 </ul>
 </li>
 <li>
 <p>Lawyer LLaMA 法考题解答（<code>QA_LLLAMA_JE</code>）</p>
+  <details>
+  <summary>统计信息</summary>
+  <p></p>
+<pre class="hljs"><code><div>Fields                       id, reference, instruction, input, output
+Number of data               6491
+
+Max total length of fields   1365
+Min total length of fields   92
+Ave total length of fields   327.2
+
+Number of data &lt;= 256        2033 (31.3%)
+Number of data &lt;= 512        5970 (92.0%)
+Number of data &lt;= 1024       6486 (99.9%)
+Number of data &lt;= 2048       6491 (100.0%)
+</div></code></pre>
+  </details>
 <ul>
 <li>
 <p>类型：开源训练数据；数据来源：<a href="https://github.com/AndrewZhe/lawyer-llama">Lawyer LLaMA</a></p>
 </li>
 <li>
-<p>处理：1. 原数据集中答案和分析的顺序有部分与指示不符，手动进行了调整（刘）。2. 修正了问题不通顺的数据（刘）。3. 删除了部分含有乱码或显著错误的数据（刘）。4. 用ChatGPT重写了不通顺的问题，并根据修改的问题调整了答案。</p>
-  <details>
-  <summary>统计信息</summary>
-  <p></p>
-<pre class="hljs"><code><div>Fields                       instruction, input, output
-Number of data               6491
-
-Max total length of fields   1351
-Min total length of fields   78
-Ave total length of fields   313.2
-
-Number of data &lt;= 256        2465 (38.0%)
-Number of data &lt;= 512        6046 (93.1%)
-Number of data &lt;= 1024       6487 (99.9%)
-Number of data &lt;= 2048       6491 (100.0%)
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 根据《物权法》的规定，以下关于留置权的陈述是否正确？
-为了防止债权人滥用留置权，债权人留置的动产必须与债权属于同一法律关系。
-
-请先给出答案然后再给出推理过程。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 这个说法是不正确的。
-
-根据《物权法》的规定，留置权是指债权人因债务人未履行到期债务，有权拒绝将其占有的动产交付给债务人或者其它人的权利。该法律并没有规定留置的动产必须与债权属于同一法律关系。事实上，留置权的动产可以是债务人的财产，也可以是第三人的财产，只要该动产与债权人的债权有关联即可。因此，为了防止债权人滥用留置权，法律对留置权的行使设定了限制和保护措施，而非要求留置的动产必须与债权属于同一法律关系。
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 赢鑫投资公司的业绩令人瞩目。公司计划开展非公开募集基金业务，首期募集金额为1000万元。李某等老客户得知此消息后纷纷表示支持，并愿意继续将自己的资金交由公司运作。关于此事，以下陈述是否正确？
-赢鑫公司应向中国证监会备案其非公开募集基金业务。
-
-请给出详细的推理过程之后再给出答案。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 这个说法是正确的。
-
-根据《中华人民共和国证券法》第一百零一条的规定，非公开募集基金应向中国证监会备案。赢鑫公司计划开展非公开募集基金业务，并且首期募集金额为1000万元。根据法律规定，赢鑫公司应当向中国证监会备案其非公开募集基金业务，以确保合法开展基金业务，并保障投资者的合法权益。
-</div></code></pre>
-  </details>
+<p>处理：</p>
+<ul>
+<li>原数据集中答案和分析的顺序有部分与指示不符，手动进行了调整（刘）。</li>
+<li>修正了问题不通顺的数据（刘）。</li>
+<li>删除了部分含有乱码或显著错误的数据（刘）。</li>
+<li>用ChatGPT重写了不通顺的问题，并根据修改的问题调整了答案。</li>
+</ul>
 </li>
 <li>
 <p>潜在问题</p>
 <ul>
-<li>法条错误：ChatGPT调整的回答中，有部分提及了具体的法条，但无法保证正确性。通过调整prompt较难进行稳定的限制，因而可能需要后续将所有法条编号均改为<code>第X条</code>。</li>
+<li>法条错误：ChatGPT调整的回答中，有部分提及了具体的法条，但无法保证正确性。</li>
 </ul>
 </li>
+<li>
+<p>模板一（全部数据）</p>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>关于城乡规划的制定，以下说法是否正确？
+省、自治区人民政府组织编制省域城镇体系规划，并向国务院提交审批。
+
+请先给出答案然后再给出推理过程。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输出</summary>
+  <p></p>
+<pre class="hljs"><code><div>说法正确。
+
+根据《城乡规划法》第33条的规定，省、自治区人民政府应当组织编制本行政区域城乡规划，其中包括省域城镇体系规划。根据《城乡规划法》第37条的规定，省、自治区人民政府组织编制的省域城镇体系规划，确需报国务院批准。因此，省、自治区人民政府组织编制省域城镇体系规划，并向国务院提交审批的说法是正确的。
+</div></code></pre>
+  </details>
+</li>
 </ul>
 </li>
 <li>
-<p>Lawyer LLaMA 法律咨询回复（<code>QA_LLLAMA_LA</code>）</p>
-<ul>
-<li>
-<p>类型：开源训练数据；数据来源：<a href="https://github.com/AndrewZhe/lawyer-llama">Lawyer LLaMA</a></p>
-</li>
-<li>
-<p>处理：1. 删去了原数据集中问题或答案不完整的、以及问题和答案分割错误的数据（刘）。2. 删去了无效问答（刘）。3. 利用ChatGPT将原数据集中的问题用重写为通顺的语言，并重新生成了答案。</p>
+<p>Lawyer LLaMA 法律咨询（<code>QA_LLLAMA_LA</code>）</p>
   <details>
   <summary>统计信息</summary>
   <p></p>
-<pre class="hljs"><code><div>Fields                       instruction, input, output
+<pre class="hljs"><code><div>Fields                       id, reference, instruction, input, output
 Number of data               9659
 
-Max total length of fields   850
-Min total length of fields   47
-Ave total length of fields   268.9
+Max total length of fields   862
+Min total length of fields   59
+Ave total length of fields   280.9
 
-Number of data &lt;= 256        5122 (53.0%)
-Number of data &lt;= 512        9539 (98.8%)
+Number of data &lt;= 256        4681 (48.5%)
+Number of data &lt;= 512        9504 (98.4%)
 Number of data &lt;= 1024       9659 (100.0%)
 Number of data &lt;= 2048       9659 (100.0%)
 </div></code></pre>
   </details>
-</li>
-<li>
-<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 发生意外事故后，如果无法成功调解且雇主不予配合，应该采取何种措施？
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 根据提供的问题，如果发生意外事故后无法成功调解且雇主不予配合，可以考虑以下措施：
-
-1. 寻求法律援助：您可以咨询律师或法律援助机构，了解您的权利和法律程序。
-
-2. 提起诉讼：如果您认为您有足够证据证明雇主的过错，可以考虑提起诉讼。在这种情况下，您需要雇佣一名律师代表您。
-
-3. 报告相关机构：您可以向相关机构报告此事，例如劳动监察部门或工会。这些机构可能会调查此事并采取适当的行动。
-
-无论采取何种措施，都需要保证您有足够的证据来支持您的主张。如果需要更多的建议，请咨询一名专业律师。
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 我目前处于取保候审状态，离期满还有10天，但案件刚刚移交给检察院，是否会被收监？作为一名有前科的个体，是否有可能申请判缓刑？
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 您好，
-
-根据您目前的情况，如果取保候审期限到期后案件尚未结案，有可能会被收监。但是是否会被收监取决于具体的案情和法律规定。
-
-至于申请判缓刑，有前科的个体是可以申请的。然而，是否能够获得判缓刑需要根据具体情况进行评估。判缓刑是综合考虑被告人的犯罪情节、对社会的危害程度、认罪态度以及悔罪表现等因素后做出的刑事判决。如果您能够积极认罪、悔过自新，并且表现出积极的态度，可能会有机会获得判缓刑。但是，具体情况还需要您咨询您的律师以获得准确的法律意见。
-
-祝您一切顺利！
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>潜在问题</p>
-<ul>
-<li>法条错误：ChatGPT调整的回答中，有部分提及了具体的法条，但无法保证正确性。通过调整prompt较难进行稳定的限制，因而可能需要后续将所有法条编号均改为<code>第X条</code>。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Lawyer LLaMA 法律咨询回复（含法条）（<code>QA_LLLAMA_LAWA</code>）</p>
 <ul>
 <li>
 <p>类型：开源训练数据；数据来源：<a href="https://github.com/AndrewZhe/lawyer-llama">Lawyer LLaMA</a></p>
 </li>
 <li>
-<p>处理：1. 利用ChatGPT将原数据集中的问题用重写为通顺的语言，并重新生成了答案。</p>
+<p>处理：</p>
+<ul>
+<li>删去了原数据集中问题或答案不完整的、以及问题和答案分割错误的数据（刘）。</li>
+<li>删去了无效问答（刘）。</li>
+<li>利用ChatGPT将原数据集中的问题用重写为通顺的语言，并重新生成了答案。</li>
+</ul>
+</li>
+<li>
+<p>潜在问题</p>
+<ul>
+<li>法条错误：ChatGPT调整的回答中，有部分提及了具体的法条，但无法保证正确性。</li>
+</ul>
+</li>
+<li>
+<p>模板一（全部数据）</p>
   <details>
-  <summary>统计信息</summary>
+  <summary>输入</summary>
   <p></p>
-<pre class="hljs"><code><div>Fields                       instruction, input, output
-Number of data               955
-
-Max total length of fields   1007
-Min total length of fields   71
-Ave total length of fields   417.2
-
-Number of data &lt;= 256        139 (14.6%)
-Number of data &lt;= 512        719 (75.3%)
-Number of data &lt;= 1024       955 (100.0%)
-Number of data &lt;= 2048       955 (100.0%)
+<pre class="hljs"><code><div>领证后，由女方父母支付首付购买的房屋，女方使用公积金进行还贷。房产证上写有女方的名字，该房屋属于谁的财产？
+</div></code></pre>
+  </summary>
+  <details>
+  <summary>输出</summary>
+  <p></p>
+<pre class="hljs"><code><div>根据中国的婚姻法，婚姻期间所购买的房产属于夫妻共同财产，无论是谁出首付或者谁还贷款。然而，如果房产证上只写了女方的名字，那么该房产就属于女方个人财产。尽管如此，在离婚时，夫妻双方仍可以协商分配房产的权益。如双方无法达成协议，法院将根据实际情况进行判决。
 </div></code></pre>
   </details>
 </li>
+</ul>
+</li>
 <li>
-<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
+<p>Lawyer LLaMA 含法条法律咨询（<code>QA_LLLAMA_LAWA</code>）</p>
   <details>
-  <summary>样例一</summary>
+  <summary>统计信息</summary>
   <p></p>
-<pre class="hljs"><code><div>[Input] 结婚不满4个月后，若怀孕已达7个月，是否可以要求退还彩礼？另外，关于孩子的抚养费，应该要求多少？
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 根据《民法典》第一千零八十五条，离婚后，子女由一方直接抚养的，另一方应当负担部分或全部抚养费。负担费用的多少和期限的长短，由双方协议；协议不成的，由人民法院判决。因此，关于孩子的抚养费应由双方协商确定或由法院判决。
+<pre class="hljs"><code><div>Fields                       id, reference, instruction, input, output
+Number of data               955
 
-至于彩礼的退还问题，根据《民法典》第一百九十六条，请求支付抚养费的请求权不适用诉讼时效的规定。因此，如果婚后不满4个月，妻子已怀孕达到7个月，可以请求退还彩礼。
+Max total length of fields   1508
+Min total length of fields   315
+Ave total length of fields   789.6
 
-然而，关于具体退还彩礼的金额，根据提供的法律条文和事实，无法得出明确的结论。退还彩礼的具体金额应根据双方的协商或法院的判决来确定，可能受到具体情况的影响。
-
-总结：根据《民法典》第一千零八十五条，离婚后子女抚养费应由双方协商或法院判决确定。根据《民法典》第一百九十六条，请求支付抚养费的请求权不适用诉讼时效的规定，因此可以请求退还彩礼。然而，具体退还彩礼的金额需要根据具体情况协商或由法院判决确定。
+Number of data &lt;= 256        0 (0.0%)
+Number of data &lt;= 512        51 (5.3%)
+Number of data &lt;= 1024       865 (90.6%)
+Number of data &lt;= 2048       955 (100.0%)
 </div></code></pre>
   </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 我发现我妻子与我的朋友不止一次发生性关系，还与其他人有过类似情况，我可以获得什么？
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 根据《民法典》第一千零九十一条，如果您发现妻子与他人发生性关系，导致离婚的情形，您作为无过错方有权请求损害赔偿。此外，根据《民法典》第一千零四十一条，婚姻家庭受国家保护，保护妇女的合法权益。因此，您可以根据相关法律规定，请求获得离婚赔偿。
-</div></code></pre>
-  </details>
+<ul>
+<li>
+<p>类型：开源训练数据；数据来源：<a href="https://github.com/AndrewZhe/lawyer-llama">Lawyer LLaMA</a></p>
+</li>
+<li>
+<p>处理：</p>
+<ul>
+<li>利用ChatGPT将原数据集中的问题用重写为通顺的语言，并重新生成了答案。</li>
+</ul>
 </li>
 <li>
 <p>潜在问题</p>
@@ -894,98 +906,58 @@ Number of data &lt;= 2048       955 (100.0%)
 <li>类型单一：原数据集中只涉及民法典相关的问题，且几乎全部与婚姻法有关。</li>
 </ul>
 </li>
+<li>
+<p>模板一（全部数据）</p>
+  <details>
+  <summary>参考法条</summary>
+  <p></p>
+<pre class="hljs"><code><div>《民法典》第一千零七十九条：夫妻一方要求离婚的，可以由有关组织进行调解或者直接向人民法院提起离婚诉讼。人民法院审理离婚案件，应当进行调解；如果感情确已破裂，调解无效的，应当准予离婚。有下列情形之一，调解无效的，应当准予离婚：（一）重婚或者与他人同居；（二）实施家庭暴力或者虐待、遗弃家庭成员；（三）有赌博、吸毒等恶习屡教不改；（四）因感情不和分居满二年；（五）其他导致夫妻感情破裂的情形。一方被宣告失踪，另一方提起离婚诉讼的，应当准予离婚。经人民法院判决不准离婚后，双方又分居满一年，一方再次提起离婚诉讼的，应当准予离婚。
+《民法典》第一千零七十六条：夫妻双方自愿离婚的，应当签订书面离婚协议，并亲自到婚姻登记机关申请离婚登记。离婚协议应当载明双方自愿离婚的意思表示和对子女抚养、财产以及债务处理等事项协商一致的意见。
+《民法典》第一千零七十八条：婚姻登记机关查明双方确实是自愿离婚，并已经对子女抚养、财产以及债务处理等事项协商一致的，予以登记，发给离婚证。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>您好，如果只是领取结婚证而没有在一起生活满三年，是否可以视为自动离婚？
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输出</summary>
+  <p></p>
+<pre class="hljs"><code><div>根据《民法典》第一千零七十九条规定，夫妻一方要求离婚时，人民法院应当进行调解。如果感情确已破裂，调解无效的情况下，应当准予离婚。其中，第一千零七十九条第四款规定，如果夫妻因感情不和分居满二年，调解无效，应当准予离婚。因此，根据法律规定，只领取结婚证而没有在一起生活满三年的情况下，可以视为自动离婚。
+</div></code></pre>
+  </details>
+</li>
 </ul>
 </li>
 <li>
-<p>罪名与刑罚预测（<code>QA_YC</code>）</p>
-<ul>
-<li>
-<p>类型：有标签数据；数据来源：<a href="https://github.com/china-ai-law-challenge/CAIL2018">CAIL2018</a></p>
+<p>刑罚预测（<code>QA_YC</code>）</p>
   <details>
   <summary>统计信息</summary>
   <p></p>
-<pre class="hljs"><code><div>Fields                       instruction, input, output
-Number of data               30422
+<pre class="hljs"><code><div>Fields                       id, reference, instruction, input, output
+Number of data               27657
 
-Max total length of fields   2091
-Min total length of fields   208
-Ave total length of fields   774.0
+Max total length of fields   3115
+Min total length of fields   320
+Ave total length of fields   1105.9
 
-Number of data &lt;= 256        6 (0.0%)
-Number of data &lt;= 512        2525 (8.3%)
-Number of data &lt;= 1024       26643 (87.6%)
-Number of data &lt;= 2048       30421 (100.0%)
+Number of data &lt;= 256        0 (0.0%)
+Number of data &lt;= 512        109 (0.4%)
+Number of data &lt;= 1024       12222 (44.2%)
+Number of data &lt;= 2048       27491 (99.4%)
 </div></code></pre>
   </details>
+<ul>
+<li>
+<p>类型：有标签数据；数据来源：<a href="https://github.com/china-ai-law-challenge/CAIL2018">CAIL2018</a></p>
 </li>
 <li>
-<p>模板一（<code>proportion=&quot;0.1&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 广东省广州市天河区人民检察院指控：2012年4月至9月，被告人王某为私自承包装修工程，冒充广州市高森装饰工程设计有限公司工程经理的身份，并伪造广州市高森装饰工程设计有限公司公章、财务专用章、合同书，在天河区元岗分别与广州新元岗娱乐有限公司和广州网逸居网络有限公司签订装饰工程合同并进场施工。因工期延误给两公司造成损失。2014年1月26日，被告人王某被抓获归案。公诉机关认为被告人王某的行为已经构成伪造公司印章罪，提请本院依法判处，并列举了相关证据。
-
-请判断上述案件中涉及的罪行和可能的判决，并给出参照的法条。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 根据提供的案情，王某可能犯有伪造[公司、企业、事业单位、人民团体]印章罪。具体判决需要考虑诸多其他因素，实际的判决结果需要由法院综合考虑后做出。我只能给出可能的刑罚：王某可能会被判处13年有期徒刑。
-
-参照的法条如下：
-刑法第280条：【伪造、变造、买卖国家机关公文、证件、印章罪】【盗窃、抢夺、毁灭国家机关公文
-、证件、印章罪】伪造、变造、买卖或者盗窃、抢夺、毁灭国家机关的公文、证件、印章的，处三年以下有期徒刑、拘役、管制或者剥夺政治权利，并处罚金；情节严重的，处三年以上十年以下有期徒刑，并处罚金。【伪造公司、企业、事业单位、人民团体印章罪】伪造公司、企业、事业单位、人民团体的印章的，处三年以下有期徒刑、拘役、管制或者剥夺政治权利，并处罚金。【伪造、变造、买卖身份证件罪】伪造、变造、买卖居民身份证、护照、社会保障卡、驾驶证等依法可以用于证明身份的证件的，处三年以下有期徒刑、拘役、管制或者剥夺政治权利，并处罚金；情节严重的，处三年以上七年以下有期徒刑，并处罚金。【使用虚假身份证件、盗用身份证件罪】在依照国家规定应当提供身份证明的活动中，使用伪造、变造的或者盗用他人的居民身份证、护照、社会保障卡、驾驶证等依法可以用于证明身份的证件，情节严重的，处拘役或者管制，并处或者单处罚金。有前款行为，同时构成其他犯罪的，依照处罚较重的规定定罪处罚。【冒名顶替罪】盗用、冒用他人身份，顶替他人取得的高等学历教育入学资格、公务员录用资格、就业安置待遇的，处三年以下有期徒刑、拘役或者管制，并处罚金。组织、指使他人实施前款行为的，依照前款的规定从重处罚。国家工作人员有前两款行为，又构成其他犯罪的，依照数罪并罚的规定处罚。
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 重庆市人民检察院第五分院指控：2016年4月1日晚，被告人巫云某因故与女友李某的同事罗某发生争执，遂与罗某电话约定在重庆市南岸区光电路五小区附近见面。后巫云某电话邀约蒙某，由蒙某带领陶某、王某赶至南岸区光电路西南计算机有限责任公司门口与巫云某会面。罗某则纠集曾某、冉某、吴1某 等11人在罗某位于南岸区五小区7幢1某的租赁屋中聚集并前往约定地点。次日1时许，罗某带领田某1、冉某、冉某1、代2某、彭某等人行至西计公司对面人行道处时与等候在此的巫云某等人相遇，双方遂发生打斗。其间，巫云某持随身携带的水果刀向罗某一方人员进行捅刺，后趁机逃离现场。在打斗过程中，田某1、冉某、冉某1、代2某、彭某均被刀刺中，其中田某1经送医院抢救无效死亡。经鉴定，田某1 系单刃刺器致右胸部穿通伤、心脏破裂造成失血性休克死亡；冉某的损伤程度属重伤二级，冉某1的损 伤程度属轻伤一级，代2某的损伤程度属轻伤二级，彭某的损伤程度属轻微伤。2016年4月5日11时许， 巫云某向公安机关投案。为证明指控的事实，公诉人当庭举示了相关证据，并由此认为，被告人巫云某持刀聚众斗殴，致1人死亡、1人重伤、2人轻伤、1人轻微伤，其行为已触犯《中华人民共和国刑法》××××、××之规定，应当以××罪追究其刑事责任。提请本院依法判处。
-
-请判断上述案件中涉及的罪行和可能的判决，并给出参照的法条。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 根据提供的案情，巫云某可能犯有故意杀人罪。具体判决需要考虑诸多其他因素，实际的判决结果需要由法院综合考虑后做出。我只能给出可能的刑罚：巫云某可能会被判处无期徒刑。
-
-参照的法条如下：
-1. 刑法第292条：【聚众斗殴罪】聚众斗殴的，对首要分子和其他积极参加的，处三年以下有期徒刑、拘役或者管制；有下列情形之一的，对首要分子和其他积极参加的，处三年以上十年以下有期徒刑：（一）多次聚众斗殴的；（二）聚众斗殴人数多，规模大，社会影响恶劣的；（三）在公共场所或者交通要道聚众斗殴，造成社会秩序严重混乱的；（四）持械聚众斗殴的。【故意伤害罪】【故意杀人罪】聚众斗殴，致人重伤、死亡的，依照本法第二百三十四条、第二百三十二条的规定定罪处罚。
-2. 刑法第232条：【故意杀人罪】故意杀人的，处死刑、无期徒刑或者十年以上有期徒刑；情节较轻的，处三年以上十年以下有期徒刑。
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>模板二（<code>proportion=&quot;full&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 阳信县人民检察院指控，2017年初，被告人王某某捡得罂粟果一个，后于3月份将罂粟籽与小葱籽混播 于其家院子西侧的菜地中。同年4月28日，公安机关接群众举报后在上述地点查获罂粟植株共计为3100 株。为证实上述指控，公诉机关当庭提交了相关证据。公诉机关认为，被告人王某某非法种植罂粟3100株，其行为触犯了《中华人民共和国刑法》××××之规定，应以××罪追究其刑事责任。提请本院依法判处。
-
-请根据给定的事实，推理出上述案件中可能的判决。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 根据刑法第三百五十一条的规定，非法种植罂粟三千株以上的行为，属于非法种植毒品原植物罪。根据案件事实，被告人王某某种植的罂粟植株共计为3100株，符合该条款中的数量要求。因此，可以得出结论：被告人王某某犯有非法种植毒品原植物罪。
-
-根据刑法第三百五十一条的规定，非法种植罂粟三千株以上的情况，应处五年以上有期徒刑，并处罚金或者没收财产。根据案件事实，被告人王某某种植的罂粟植株数量为3100株，达到了该条款中的数量要求。因此，可以得出刑罚推断：被告人王某某应被判处五年以上有期徒刑，并处罚金或者没收财产。
-
-请注意，以上是根据提供的案件事实和相关法律条文进行的法律推理，最终的判决和刑罚应由法院根据实际情况作出。
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 公诉机关指控：2014年9月2日00时40分许，被告人邹某酒后驾驶新A***23号小型轿车沿本市河北路由东向西行驶至长春路路口时被公安人员查获。经鉴定，被告人邹某血液中酒精含量为158mg/100ml。公诉 机关当庭出示了被告人的供述、书证等证据认为，被告人邹某的行为触犯《中华人民共和国刑法》××××的规定，构成××罪。提请法院依法惩处。
-
-请根据给定的事实，推理出上述案件中可能的判决。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 根据提供的相关法律条文和案件事实，可以得出以下推理和可能的判决及处罚：
-
-1. 根据刑法第一百三十三条第一款规定，醉酒驾驶机动车属于危险驾驶罪的情形之一。
-2. 根据案件事实，被告人邹某在酒后驾驶小型轿车时被公安人员查获，并经鉴定其血液中酒精含量为158mg/100ml。
-3. 根据刑法第一百三十三条第一款规定，因醉酒驾驶机动车而发生重大事故，致人重伤、死亡或者使 公私财产遭受重大损失的，构成交通肇事罪。
-4. 根据刑法第一百三十三条第四款规定，机动车所有人、管理人对醉酒驾驶机动车行为负有直接责任 。
-5. 根据刑法第一百三十三条第四款规定，有醉酒驾驶机动车行为，同时构成其他犯罪的，依照处罚较 重的规定定罪处罚。
-
-综上所述，根据法律推理，可以得出以下可能的判决和处罚：
-被告人邹某犯有危险驾驶罪和交通肇事罪，同时构成其他犯罪。根据刑法第一百三十三条的规定，对于危险驾驶罪，可处拘役，并处罚金；对于交通肇事罪，可处三年以下有期徒刑或者拘役。由于同时构成其他犯罪，根据刑法规定，应依照处罚较重的规定定罪处罚。
-
-请注意，最终的判决和处罚应由法院根据具体情况作出。以上仅为根据提供的法律条文和案件事实进行的推理，仅供参考。
-</div></code></pre>
-  </details>
+<p>处理：</p>
+<ul>
+<li>将原本用于预测的法条作为ChatGPT的输入，让其尽量按照法律三段论的格式对特定案情进行刑罚预测。</li>
+</ul>
 </li>
 <li>
 <p>潜在问题</p>
@@ -993,64 +965,89 @@ Number of data &lt;= 2048       30421 (100.0%)
 <li>类型单一：原数据集中只涉及刑法相关的案件，而没有与其他法律相关的案件。</li>
 </ul>
 </li>
+<li>
+<p>模板一（全部数据）</p>
+  <details>
+  <summary>参考法条</summary>
+  <p></p>
+<pre class="hljs"><code><div>《刑法》第一百四十三条：【生产、销售不符合安全标准的食品罪】生产、销售不符合食品安全标准的食品，足以造成严重食物中毒事故或者其他严重食源性疾病的，处三年以下有期徒刑或者拘役，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处三年以上七年以下有期徒刑，并处罚金；后果特别严重的，处七年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>公诉机关指控：2005年至2006年间，兰某某、李某1（均已判刑）夫妇在未办理任何相关许可证件、没 有任何卫生消毒设施、安全设施的情况下，在瑞金市泽覃乡光辉村李屋小组15号原泽覃乡粮管所旁的自己家中建立了冻库、烤房，用于香肠等肉类食品生产加工。自2007年起，每年的3月份至1O月份是香肠 食品的销售淡季，兰某某就从瑞金城区的绵江农贸市场及壬田镇、武阳镇、泽覃乡等圩镇的屠宰户手中以低于市场价格大量收购未经检验检疫的猪肉和病死猪（婆）肉存储在冻库内。每年在11月份至春节是香肠等肉类食品的销售旺季，兰某某、李某1夫妇就通过自己加工、雇请帮工的方式，在家里用冻库内 存储的猪肉大批量加工、生产香肠，在未经过任何部门检验检疫，也未注明任何食品安全及食用标识的情况下，以明显低于市场价格进行批发销售及零售。2007年10月至2009年10月，被告人李某某在明知兰某某加工生产的香肠无生产厂家、生产日期、产品合格证、许可证等安全标识的情况下，以明显低于市场价格，从兰某某处批发香肠并销售给消费者食用，重量达2281斤，价值20000余元，非法获利1000余 元。经鉴定，所扣押兰某某、李某1夫妇生产、销售的香肠不符合食品安全标准。
+
+请根据给定的事实，推理出上述案件中可能的判决。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输出</summary>
+  <p></p>
+<pre class="hljs"><code><div>根据刑法第一百四十三条的规定，生产、销售不符合安全标准的食品罪的刑罚应根据案件的具体情节来确定。根据案件事实，被告人李某某明知兰某某加工生产的香肠不符合食品安全标准，仍然以明显低于市场价格从兰某某处批发并销售给消费者食用，重量达2281斤，价值20000余元，非法获利1000余元。 经鉴定，所扣押的香肠不符合食品安全标准。
+
+根据以上事实和刑法第一百四十三条的规定，可以得出以下推论：
+1. 李某某生产、销售的香肠不符合食品安全标准；
+2. 这种食品足以造成严重食物中毒事故或其他严重食源性疾病。
+
+因此，根据刑法第一百四十三条的规定，李某某犯有生产、销售不符合安全标准的食品罪。根据案件事实和刑法规定，可以推断李某某应被判处三年以上七年以下有期徒刑，并处罚金。
+</div></code></pre>
+  </details>
+</li>
 </ul>
 </li>
 <li>
 <p>涉法舆情摘要（<code>ZY_YQZY</code>）</p>
+  <details>
+  <summary>统计信息</summary>
+  <p></p>
+<pre class="hljs"><code><div>Fields                       id, reference, instruction, input, output
+Number of data               5750
+
+Max total length of fields   20401
+Min total length of fields   110
+Ave total length of fields   1957.1
+
+Number of data &lt;= 256        1 (0.0%)
+Number of data &lt;= 512        298 (5.2%)
+Number of data &lt;= 1024       1827 (31.8%)
+Number of data &lt;= 2048       3857 (67.1%)
+</div></code></pre>
+  </details>
 <ul>
 <li>
 <p>类型：有标签数据；数据来源：<a href="http://cail.cipsc.org.cn/task_summit.html?raceID=4&amp;cail_tag=2022">CAIL2022</a></p>
 </li>
 <li>
-<p>处理：1. 原数据集中存在繁体文本，先将其全部转换为简体中文。2. 原数据集中存在大量HTML转义字符，现将其全部替换为常规可读字符。</p>
-  <details>
-  <summary>统计信息</summary>
-  <p></p>
-<pre class="hljs"><code><div>Fields                       instruction, input, output
-Number of data               5750
-
-Max total length of fields   20394
-Min total length of fields   103
-Ave total length of fields   1950.1
-
-Number of data &lt;= 256        1 (0.0%)
-Number of data &lt;= 512        308 (5.4%)
-Number of data &lt;= 1024       1852 (32.2%)
-Number of data &lt;= 2048       3862 (67.2%)
-</div></code></pre>
-  </details>
-</li>
-<li>
-<p>模板一（<code>proportion=&quot;full&quot;</code>）</p>
-  <details>
-  <summary>样例一</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 以下是一段涉法舆情文本：
-2017年9月，四川的蒲小姐以61万的价格，在东莞某小区购买一套房子。这套房子是蒲小姐与他先生的婚房。在付了6万元定金之后，蒲小姐意外从旁人口中听到一个令她毛骨悚然的消息。当事人蒲小姐表示：“我们2017年12月12号在这里找铺位，想做点小生意，开宵夜店，然后邻居跟我讲，说有个笨女人她买了房子，而且是凶杀案房子。我就问是哪一座，他说是金泽台X座，刚好就是我房子，几个晚上没有睡好觉，真的。”婚房变凶宅，蒲小姐找到中介公司工作人员，对方告诉她并不知道该套房屋是凶宅。难道是屋主放盘时故意隐瞒了真相？蒲小姐找到了屋主廖女士。打开APP，查看更多精彩图片当事人蒲小姐称：“我说这个是命案房，我是买来结婚的，我是图个吉利，所以把房子的定金退给我。她不愿意退给我，也不协商。”协商不成，蒲小姐将屋主廖女士告上了法庭。要求撤销购房合同，并判令被告双倍返原告购房款定金共12万元。庭审时，蒲小姐发现，屋主廖女士原来是中介公司的法人。当事人蒲小姐怀疑：“为什么没有告诉我如实状况，我感觉是个欺诈行为，而且她是连同两个员工让我买，拼命让我给钱，我不知道什么状况。”根据蒲小姐律师从警方调取的资料显示，该房屋在2012年11月7日发生刑事案件，导致一人死亡。记者联系了屋主廖女士。对方称，自己的确是中介公司法人，该套房屋所有权是2015年拍卖所得，并表示自己也是受害者。中介公司廖女士称：“都不知道是N多年前的事情，从警方调出那些东西出来，我才知道房屋内有刑事案，我不知道的情况下我买了，我倒大霉了，我买了这套房子，我也是不知情的卖给蒲小姐。”律师认为，房屋买卖中，销售者有义务将房屋的真实情况告知购房者。广东盈隆东莞律师张鹏解释：“如果销售房产的这一方，刻意隐瞒了房屋曾经发生过恶劣的刑事案件这些信息，通过欺诈的手段促成了房屋买卖合同的签署，购入房产这一方可以通过起诉方式撤销合同、归还购房款，并且有过错方赔偿因过错导致的损失。”因为证据调取困难等原因，蒲小姐在庭审时未能举证证明屋主存在隐瞒、欺诈行为，法院二审其败诉。目前，蒲小姐继续搜集更加充分的证据，准备申请案件再审。
-
-请对其进行摘要。
-</div></code></pre>
-<pre class="hljs"><code><div>[Output] 蒲小姐于2017年9月以61万的价格在东莞某小区购买一套婚房，支付6万元定金后被告知该房产为凶房，要求撤销购房合同并双倍返还定金。协商不成，将卖家廖女士告到法院。由于证据不足，原告二审败诉。蒲小姐表示将继续搜集证据，申请再审。
-</div></code></pre>
-  </details>
-  <details>
-  <summary>样例二</summary>
-  <p></p>
-<pre class="hljs"><code><div>[Input] 以下是一段涉法舆情文本：
-网易11月18日讯今日，有媒体曝出私募基金管理机构东方汇富被法院列为失信被执行人，对此，东方汇富方面告诉外，这是因为公司在为其他企业提供担保的过程中，被牵连进该企业执行案件中，从而被列入失信被执行人名单。并表示公司已经在法院主持下同主债务人、债权人正积极达成和解方案，短时间内定将公司从上述名单中移除。但上述东方汇富人士拒绝透露东方汇富是在为哪家公司担保的过程中卷入其中，并拒绝透露被担保公司属于债务人还是债权人。根据天眼查，东方汇富投资控股有限公司的失信信息，执行法院是宁波市北仑区人民法院，立案时间是2018年9月17日。可以看到，此时距离立案时间已经过去了4个月。“这是公司在为另外一家公司提供担保的过程中，因为他们债务情况（引起的）。一开始我们以为他们能处理好，最后变成我们被卷入失信被执行人名单。”上述东方汇富人士说道。根据东方汇富的官网，其自2005年成立，至2018年3月，已经在全国多个省市培养了超过20支投资团队，先后设立数十支基金，总管理规模超过300亿人民币。
-
-请对其进行摘要。
-</div></code></pre>
-<pre class="hljs"><code><div>媒体曝出私募基金机构东方汇富被宁波市北仑区法院列为失信被执行人,原因为该公司为其他企业担保而被牵连进入该企业执行的案件中,继而被列入失信名单，但东方公司人员拒绝透露被担保公司信息，目前案涉各方正积极达成和解。
-</div></code></pre>
-  </details>
+<p>处理：</p>
+<ul>
+<li>原数据集中存在繁体文本，先将其全部转换为简体中文。</li>
+<li>原数据集中存在大量HTML转义字符，现将其全部替换为常规可读字符。</li>
+</ul>
 </li>
 <li>
 <p>潜在问题</p>
 <ul>
 <li>数据混乱：原数据集中部分文本带有格式或者链接信息，虽然已经进行了初步清洗但仍存在问题。</li>
-<li>摘要长度不定：原数据集中摘要长度不一。</li>
 </ul>
+</li>
+<li>
+<p>模板一（全部数据）</p>
+  <details>
+  <summary>输入</summary>
+  <p></p>
+<pre class="hljs"><code><div>以下是一段涉法舆情文本：
+安徽省质监局原局长朱琳涉嫌受贿案开庭，被控受贿500余万“安徽纪检监察”微信公众号2017-11-2310:28朱琳图片来自网络11月23日上午，安徽省质量技术监督局原党组书记、局长朱琳涉嫌受贿一案在阜阳市中级人民法院一审公开开庭审理。该案由阜阳市中级人民法院院长吴世琦担任审判长，阜阳市人民检察院检察长李德文出庭支持公诉，被告人朱琳及其辩护人到庭参加诉讼。检察机关指控，2001年至2017年，被告人朱琳利用担任安徽省人民政府驻北京办事处副主任、主任及安徽省质量技术监督局局长等职务便利，为他人谋取利益，并利用上述职权、地位形成的便利条件，通过其他国家工作人员职务上的行为，为他人谋取不正当利益，索取或非法收受他人现金、购物卡、车辆等财物，折合人民币500.93万元，应当以受贿罪追究其刑事责任。省、市人大代表、政协委员、新闻记者、各界人士100余人及朱琳的 近亲属旁听了庭审。（原题为《省质监局原党组书记、局长朱琳受审，被控受贿500余万》）点击查看 全文责任编辑：蒋晨锐澎湃新闻，未经授权不得转载。新闻报料：4009-20-4009分享0打开澎湃新闻APP,发表评论
+
+请对其进行摘要。
+</div></code></pre>
+  </details>
+  <details>
+  <summary>输出</summary>
+  <p></p>
+<pre class="hljs"><code><div>11月23日上午，安徽省质量技术监督局原党组书记、局长朱琳涉嫌受贿一案在阜阳市中级人民法院一审公开开庭审理。阜阳市人民检察院指控，2001年至2017年，被告人朱琳利用职务便利，为他人谋取利益，并利用上述职权，为他人谋取不正当利益，索取或非法收受他人现金、购物卡、车辆等财物，折合人民币500.93万元，应当以受贿罪追究其刑事责任。
+</div></code></pre>
+  </details>
 </li>
 </ul>
 </li>
